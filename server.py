@@ -1,5 +1,5 @@
 from flask_app import app
-from flask_app.controllers import c1, c2
+from flask_app.controllers import categories, messages, users, vendors
 
 
 if __name__ == '__main__':

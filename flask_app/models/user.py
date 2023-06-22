@@ -1,10 +1,10 @@
 from flask import flash
 from flask_app import app
 from flask_app.config.mysqlconnection import connectToMySQL
-from flask_app.models import category, message, user, vendor
+from flask_app.models import category, message, vendor
 from werkzeug.utils import secure_filename
 from datetime import datetime
-import re, smtplib, os
+import re, os
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 NAME_REGEX = re.compile(r'^\s*$')

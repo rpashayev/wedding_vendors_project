@@ -22,10 +22,7 @@ class User:
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         
-        self.member_of_groups = []
-        self.id_of_groups = []
-        self.incoming = []
-        self.outgoing = []
+        self.messages = []
         
 
     @staticmethod

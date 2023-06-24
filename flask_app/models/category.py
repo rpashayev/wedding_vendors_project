@@ -14,6 +14,20 @@ class Category:
         self.ads = []
     
     @classmethod
+    def get_all_categories(cls):
+        categories =[]
+        query = '''
+            SELECT *
+            FROM categories;
+        '''
+        results = connectToMySQL(cls.DB).query_db(query)
+        
+        for result in results:
+            categories.append(cls(result))
+        
+        return categories
+    
+    @classmethod
     def get_category_ads(cls, data):
         query = '''
             SELECT categories.*, ads.*, images.*, users.*, review_avg.average_rating
@@ -35,7 +49,6 @@ class Category:
         one_category = cls(results[0])
         
         for row in results:
-            # if row['ads.id'] != one_ad.id:
             ad_info = {
                 'id': row['ads.id'],
                 'ad_content': row['ad_content'],
@@ -50,7 +63,6 @@ class Category:
                 'updated_at': row['images.updated_at']
             }
             
-            # if row['users.id'] != one_vendor.id:
             vendor_info = {
                 'id': row['users.id'],
                 'first_name': row['first_name'],
@@ -67,7 +79,10 @@ class Category:
                 }
             
             one_vendor = vendor.Vendor(vendor_info)
-            one_vendor.reviews.append(row['average_rating'])
+            if row['average_rating']:
+                one_vendor.reviews.append(row['average_rating'])
+            else:
+                one_vendor.reviews.append(0)
             
             one_ad.image = image.Image(image_info)
             one_ad.vendor = one_vendor

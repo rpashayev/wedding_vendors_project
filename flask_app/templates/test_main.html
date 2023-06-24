@@ -8,13 +8,63 @@
     <title>Document</title>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark p-1 bg-dark text-white">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link mx-2 active" aria-current="page" href="/">Home</a>
+                    </li>
+                    {% for category in categories %}
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="/categories/{{ category.category }}">{{ category.category }}</a>
+                        </li>    
+                    {% endfor %}
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            User
+                            </a>
+                        </li>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Login</a></li>
+                            <li><a class="dropdown-item" href="#">Registration</a></li>
+                        </ul>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Vendor
+                            </a>
+                        </li>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Login</a></li>
+                            <li><a class="dropdown-item" href="#">Registration</a></li>
+                        </ul>
+                    </ul>
+                    <li class="nav-item">
+                        <a class="nav-link mx-2" href="/users/login">User login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-2" href="/users/registration">User registration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-2" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <h1>Category</h1>
     {% for row in top_ads %}
         <div>
             <h2>{{ row.category }}</h2>
-            <div class="d-flex border">
+            <div class="d-flex">
                 {% for ad in row.ads %}
-                    <div class="m-4">
+                    <div class="card m-4">
                         <p>Ad photo: {{ ad.image.image_path}}</p>
                         <p>Vendor name: {{ ad.vendor.company_name }}</p>
                         <p>Ad text: {{ ad.ad_content }}</p>

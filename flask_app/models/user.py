@@ -11,7 +11,7 @@ NAME_REGEX = re.compile(r'^\s*$')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 class User:
-    DB = 'wedding_vendor_schema'
+    DB = 'wedding_vendors_schema'
     def __init__(self, data):
         self.id = data['id']
         self.first_name = data['first_name']

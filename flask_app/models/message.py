@@ -7,7 +7,7 @@ import re
 MSG_REGEX = re.compile(r'^\s*$')
 
 class Message:
-    DB = 'wedding_vendor_schema'
+    DB = 'wedding_vendors_schema'
     def __init__(self, data):
         self.id = data['id']
         self.content = data['content']

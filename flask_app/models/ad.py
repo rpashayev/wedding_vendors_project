@@ -4,7 +4,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models import category, message, user, vendor
 
 class Ad:
-    DB = 'wedding_vendor_schema'
+    DB = 'wedding_vendors_schema'
     def __init__(self, data):
         self.id = data['id']
         self.ad_content = data['ad_content']

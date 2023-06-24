@@ -7,7 +7,7 @@ import re
 REVIEW_REGEX = re.compile(r'^\s*$')
 
 class Review:
-    DB = 'wedding_vendor_schema'
+    DB = 'wedding_vendors_schema'
     def __init__(self, data):
         self.id = data['id']
         self.rate = data['rate']

@@ -1,7 +1,7 @@
 from flask import flash
 from flask_app import app
 from flask_app.config.mysqlconnection import connectToMySQL
-from flask_app.models import category, message, review, vendor, image, user
+from flask_app.models import category, message, review, image, user
 import re, os
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
@@ -9,7 +9,7 @@ NAME_REGEX = re.compile(r'^\s*$')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 class Vendor:
-    DB = 'wedding_vendor_schema'
+    DB = 'wedding_vendors_schema'
     def __init__(self, data):
         self.id = data['id']
         self.first_name = data['first_name']

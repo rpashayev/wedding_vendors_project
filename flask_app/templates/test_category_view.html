@@ -16,7 +16,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto align-items-lg-center">
                     <li class="nav-item">
-                        <a class="nav-link mx-2" aria-current="page" href="/">Home</a>
+                        <a class="nav-link mx-2 active" aria-current="page" href="/">Home</a>
                     </li>
                     {% for category in categories %}
                         <li class="nav-item">
@@ -30,8 +30,7 @@
                             </a>
                         </li>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Login</a></li>
-                            <li><a class="dropdown-item" href="#">Registration</a></li>
+                            <li><a class="dropdown-item" href="#">Login/Registration</a></li>
                         </ul>
                     </ul>
                     <ul class="navbar-nav">
@@ -41,19 +40,20 @@
                             </a>
                         </li>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Login</a></li>
-                            <li><a class="dropdown-item" href="#">Registration</a></li>
+                            <li><a class="dropdown-item" href="#">Login/Registration</a></li>
                         </ul>
                     </ul>
                     <li class="nav-item">
-                        <a class="nav-link mx-2" href="/users/login">User login</a>
+                        <a class="nav-link mx-2" href="/users/login_page">User login/registration TEST</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-2" href="/users/registration">User registration</a>
+                        <a class="nav-link mx-2" href="/vendors/login_page">Vendor login/registration TEST</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-2" href="/logout">Logout</a>
-                    </li>
+                    {% if session %}
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="/logout">Logout</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

@@ -46,7 +46,7 @@ class Vendor:
             FROM users 
             WHERE email = %(email)s;
         '''
-        results = connectToMySQL(cls.DB).query_db(query,data)
+        results = connectToMySQL(cls.DB).query_db(query, data)
         if len(results) < 1:
             return False
         return cls(results[0])
@@ -120,40 +120,18 @@ class Vendor:
                 
         return one_vendor
     
-    # @classmethod
-    # def get_ads_category(cls, data):
-    #     vendors = []
-    #     query = '''
-    #         SELECT *
-    #         FROM vendors
-    #         LEFT JOIN categories ON categories.id = vendors.category_id
-    #         LEFT JOIN reviews ON reviews.vendor_id = vendor.id
-    #         WHERE categories.id = %(category_id)s;
-    #     '''
-    #     results = connectToMySQL(cls.DB).query_db(query)
-        
-    #     for row in results:
-    #         if not vendors or row['id'] != vendor.id:
-    #             vendor = cls(row)
-                
-        
-    #     return vendors
-
-    @classmethod
-    def get_top_five_vendors_of_category(cls, data):
-        pass
-    
     
     @staticmethod
     def validate_vendor_registration(vendor):
         is_valid = True
-        if Vendor.get_vendor_by_email:
-            flash('Email was already registered', 'reg_error')
-            is_valid = False
-            return is_valid
-        if len(vendor['first_name']) == 0 or len(vendor['last_name']) == 0 or len(vendor['email']) == 0 or len(vendor['zip_code']) == 0 or NAME_REGEX.match(vendor['first_name']) or NAME_REGEX.match(vendor['last_name']):
+        if len(vendor['first_name']) == 0 or len(vendor['last_name']) == 0 or len(vendor['email']) == 0 or NAME_REGEX.match(vendor['first_name']) or NAME_REGEX.match(vendor['last_name']):
             flash('All fields are required!', 'reg_error')
             is_valid = False
+            return is_valid
+        if Vendor.get_vendor_by_email(vendor):
+            flash('Email was already registered', 'reg_error')
+            is_valid = False
+            # return is_valid
         if len(vendor['first_name']) < 2 or len(vendor['last_name']) < 2:
             flash('Name must be at least 2 characters!', 'reg_error')
             is_valid = False

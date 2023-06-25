@@ -36,6 +36,24 @@
                         
                         <label for="c_password" class="form-label m-0">Confirm password:</label>
                         <input type="password" class="form-control mb-1" name="c_password" id="c_password">
+
+                        <label for="company_name" class="form-label m-0">Company name:</label>
+                        <input type="text" class="form-control mb-1" name="company_name" id="company_name">
+
+                        <label for="phone" class="form-label m-0">Phone:</label>
+                        <input type="text" class="form-control mb-1" name="phone" id="phone">
+
+                        <label for="zip" class="form-label m-0">zip:</label>
+                        <input type="text" class="form-control mb-1" name="zip" id="zip">
+
+                        <label for="about" class="form-label m-0">about:</label>
+                        <input type="text" class="form-control mb-1" name="about" id="about">
+
+                        <label for="description" class="form-label m-0">description:</label>
+                        <textarea class="form-control mb-1" name="description" id="description" rows="5"></textarea>
+
+                        <input type="hidden" class="form-control mb-1" name="role_id" id="role_id" value="1">
+
                         
                         <button type="submit" class="btn btn-warning mt-2">Register</button>
                     </form>
@@ -53,10 +71,10 @@
                             {% endif %}
                         {% endwith %}
                         <label for="email" class="form-label">Email:</label>
-                        <input type="text" class="form-control" name="login_email" id="email">
+                        <input type="text" class="form-control" name="email" id="email">
                         
                         <label for="password" class="form-label">Password:</label>
-                        <input type="password" class="form-control" name="login_password" id="password">
+                        <input type="password" class="form-control" name="password" id="password">
                         
                         <button type="submit" class="btn btn-primary mt-2">Login</button>
                     </form>

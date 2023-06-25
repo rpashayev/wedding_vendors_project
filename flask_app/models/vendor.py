@@ -35,7 +35,7 @@ class Vendor:
         query = '''
             INSERT 
             INTO users(first_name, last_name, email, password, company_name, phone, zip, about, description, role_id)
-            VALUES ( %(first_name)s, %(last_name)s, %(email)s, %(password)s, %(company_name)s, %(phone)s, %(zip)s, %(about)s, %(description)s), %(role_id)s);
+            VALUES ( %(first_name)s, %(last_name)s, %(email)s, %(password)s, %(company_name)s, %(phone)s, %(zip)s, %(about)s, %(description)s, %(role_id)s);
         '''
         return connectToMySQL(cls.DB).query_db(query, data)
     

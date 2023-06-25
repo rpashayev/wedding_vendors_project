@@ -1,0 +1,66 @@
+.login-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+.login-background{
+    background-color: white
+}
+.login-logo{
+    width:50px;
+    position: absolute;
+    top: 5;
+    left: 37%;
+    align-items: center;
+    transform: translateX(-50%);
+    border-radius: 50%;
+}
+.company-name{
+    margin: auto;
+    align-items: center;
+}
+
+.login-header{
+    margin: auto;
+    display: flex;
+    text-align: center ;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-card{
+    width: 650px;
+    background-color: rgba(211, 211, 211, 0.162);
+    margin-top: 40px;
+    display: flex;
+    height: 550px;
+}
+.login-card-photo{
+    width: 300px;
+    height: 545px;
+    background-image: url(login-wedding.gif);
+}
+
+.login-statement{
+    margin-left: 70px;
+    padding: 20px;
+}
+
+#login-button{
+    margin-left: 20px;
+}
+
+.join{
+    text-decoration-line: none;
+    color: cyan;
+    font-weight:bolder;
+}
+
+.vendors-slogan{
+    padding:20px;
+    margin-top: 20px;
+    font-style: italic;
+
+}

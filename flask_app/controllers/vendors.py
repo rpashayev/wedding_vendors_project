@@ -51,6 +51,13 @@ def vendor_register():
     
     return redirect('/')
 
+@app.route('/vendors/view/<int:id>')
+def view_vendor(id):
+    data = {
+        'vendor_id': id
+    }
+    return render_template('test_vendor_view.html', one_vendor = vendor.Vendor.view_one_vendor(data), categories = category.Category.get_all_categories(), avg_rate = vendor.Vendor.get_avg_rate(data))
+
 @app.route('/logout')
 def logout():
     session.clear()

@@ -63,23 +63,29 @@
             </div>
         </div>
     </nav>
-    <h1>Category</h1>
-    {% for row in top_ads %}
-        <div>
-            <h2>{{ row.category }}</h2>
-            <div class="d-flex">
-                {% for ad in row.ads %}
-                    <div class="card m-4">
-                        <a href="/vendors/view/{{ ad.vendor.id }}" class="text-decoration-none">
-                            <p>Ad photo: {{ ad.image.image_path}}</p>
-                            <p>Vendor name: {{ ad.vendor.company_name }}</p>
-                            <p>Ad text: {{ ad.ad_content }}</p>
-                            <p>Rating: {{ ad.vendor.reviews[0]|round(1) }}</p>
-                        </a>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
+    <h1>{{ one_vendor.company_name }}</h1>
+    <h2>Gallery</h2>
+    {% for img in one_vendor.images %}
+        <p> {{ img.image_path }} </p>
     {% endfor %}
+    <p>Rating: {{ avg_rate|round(1) }}  </p>
+    <h5>About</h6>
+    <p>{{ one_vendor.about }}</p>
+    <h5>Description</h6>
+    <p>{{ one_vendor.description }}</p>
+    
+    <h4>Reviews</h4>
+    {% for review in one_vendor.reviews %}
+    <div>
+        <p>by {{ review.user.first_name }}</p>
+        <p>{{ review.rate }}</p>
+        <h6>{{ review.title }}</h6>
+        <p>{{ review.content }}</p>
+
+    </div>
+    {% endfor %}
+    
+        
+    
 </body>
 </html>

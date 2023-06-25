@@ -58,11 +58,11 @@ class Vendor:
             FROM users
             LEFT JOIN reviews ON reviews.vendor_id = users.id
             LEFT JOIN users AS reviewers ON reviewers.id = reviews.user_id
-            LEFT JOIN images ON images.vendor_id = users.id
+            
             LEFT JOIN messages ON messages.receiver_id = users.id
             LEFT JOIN users AS senders ON senders.id = messages.sender_id
             WHERE users.id = %(vendor_id)s
-            ORDER BY images.id;
+            ORDER BY reviews.id;
         '''
         results = connectToMySQL(cls.DB).query_db(query, data)
         if len(results) < 1:
@@ -90,20 +90,13 @@ class Vendor:
                     'created_at': row['reviewers.created_at'],
                     'updated_at': row['reviewers.updated_at']
                 }
-                one_review = review.Review(review_info)
-                one_review.user = user.User(reviewer_info)
-                one_vendor.reviews.append(one_review)
+                if not one_vendor.reviews or row['reviews.id'] != one_review.id:
+                    one_review = review.Review(review_info)
+                    one_review.user = user.User(reviewer_info)
+                    one_vendor.reviews.append(one_review)
+
+                one_vendor.images = image.Image.get_one_vendor_images(data)
                 
-            if row['images.id'] != None:
-                image_info = {
-                    'id': row['images.id'],
-                    'image_path': row['image_path'],
-                    'created_at': row['images.created_at'],
-                    'updated_at': row['images.updated_at']
-                }
-                if not one_vendor.images or row['images.id'] != one_image.id:
-                    one_image = image.Image(image_info)
-                    one_vendor.images.append(one_image)
                 
             if row['messages.id'] != None:
                 message_info = {

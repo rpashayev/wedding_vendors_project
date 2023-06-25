@@ -61,7 +61,8 @@ class Vendor:
             LEFT JOIN images ON images.vendor_id = users.id
             LEFT JOIN messages ON messages.receiver_id = users.id
             LEFT JOIN users AS senders ON senders.id = messages.sender_id
-            WHERE users.id = %(vendor_id)s;
+            WHERE users.id = %(vendor_id)s
+            ORDER BY images.id;
         '''
         results = connectToMySQL(cls.DB).query_db(query, data)
         if len(results) < 1:
@@ -75,7 +76,7 @@ class Vendor:
                     'id': row['reviews.id'],
                     'rate': row['rate'],
                     'title': row['title'],
-                    'content': row['reviews.content'],
+                    'content': row['content'],
                     'created_at': row['reviews.created_at'],
                     'updated_at': row['reviews.updated_at']
                 }
@@ -83,6 +84,9 @@ class Vendor:
                     'id': row['reviewers.id'],
                     'first_name': row['reviewers.first_name'],
                     'last_name': row['reviewers.last_name'],
+                    'email': row['email'],
+                    'password': row['password'],
+                    'avatar_path': row['avatar_path'],
                     'created_at': row['reviewers.created_at'],
                     'updated_at': row['reviewers.updated_at']
                 }
@@ -97,8 +101,9 @@ class Vendor:
                     'created_at': row['images.created_at'],
                     'updated_at': row['images.updated_at']
                 }
-                one_image = image.Image(image_info)
-                one_vendor.images.append(one_image)
+                if not one_vendor.images or row['images.id'] != one_image.id:
+                    one_image = image.Image(image_info)
+                    one_vendor.images.append(one_image)
                 
             if row['messages.id'] != None:
                 message_info = {
@@ -119,6 +124,18 @@ class Vendor:
                 one_vendor.messages.append(one_message)
                 
         return one_vendor
+    
+    @classmethod
+    def get_avg_rate(cls, data):
+        query = '''
+            SELECT AVG(reviews.rate)
+            FROM reviews
+            JOIN users ON users.id = reviews.vendor_id
+            WHERE users.id = %(vendor_id)s; 
+        '''
+        result = connectToMySQL(cls.DB).query_db(query, data)
+        avg_rate = result[0]['AVG(reviews.rate)']
+        return avg_rate
     
     
     @staticmethod

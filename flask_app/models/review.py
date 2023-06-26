@@ -28,3 +28,41 @@ class Review:
         '''
         
         return connectToMySQL(cls.DB).query_db(query, data)
+    
+    @classmethod
+    def get_vendor_reviews(cls, data):
+        reviews = []
+        query = '''
+            SELECT *
+            FROM reviews
+            WHERE vendor_id = %(vendor_id)s;
+        '''
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        
+        for review in results:
+            reviews.append(cls(review))
+        
+        return connectToMySQL(cls.DB).query_db(query, data)
+    
+    @classmethod
+    def get_vendor_review_by_user(cls, data):
+        query = '''
+            SELECT *
+            FROM reviews
+            WHERE vendor_id = %(vendor_id)s AND user_id = %(user_id)s;
+        '''
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        
+        if len(results) < 1:
+            return False
+        return cls(results[0])
+    
+    
+    @staticmethod
+    def validate_review(review):
+        is_valid = True
+        if Review.get_vendor_review_by_user(review):
+            flash("You've already reviewed this vendor ", 'review_error')
+            is_valid = False
+        return is_valid
+    

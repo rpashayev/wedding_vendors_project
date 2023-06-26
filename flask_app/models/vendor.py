@@ -58,11 +58,10 @@ class Vendor:
             FROM users
             LEFT JOIN reviews ON reviews.vendor_id = users.id
             LEFT JOIN users AS reviewers ON reviewers.id = reviews.user_id
-            
             LEFT JOIN messages ON messages.receiver_id = users.id
             LEFT JOIN users AS senders ON senders.id = messages.sender_id
             WHERE users.id = %(vendor_id)s
-            ORDER BY reviews.id;
+            ORDER BY reviews.updated_at DESC;
         '''
         results = connectToMySQL(cls.DB).query_db(query, data)
         if len(results) < 1:

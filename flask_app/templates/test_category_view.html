@@ -68,10 +68,12 @@
     <div class="d-flex">
         {% for ad in cat_ads.ads %}
             <div class="card m-4">
-                <p>Ad photo: {{ ad.image.image_path}}</p>
-                <p>Vendor name: {{ ad.vendor.company_name}}</p>
-                <p>Ad text: {{ ad.ad_content}}</p>
-                <p>Rating: {{ ad.vendor.reviews[0]|round(1) }} </p>
+                <a href="/vendors/view/{{ ad.vendor.id }}" class="text-decoration-none">
+                    <p>Ad photo: {{ ad.image.image_path}}</p>
+                    <p>Vendor name: {{ ad.vendor.company_name}}</p>
+                    <p>Ad text: {{ ad.ad_content}}</p>
+                    <p>Rating: {{ ad.vendor.reviews[0]|round(1) }} </p>
+                </a>
             </div>
         {% endfor %}
     </div>

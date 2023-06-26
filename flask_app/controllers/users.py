@@ -4,4 +4,4 @@ from flask_app.models import category, message, user, vendor, ad, review, image
 
 @app.route('/users/login')
 def user_login():
-    pass
+    return render_template("user_log_reg.html")

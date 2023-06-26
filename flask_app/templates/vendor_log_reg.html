@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Login</title>
+</head>
+<body class="login-background">
+    <div class="login-header">
+        <img src="{{url_for('static', filename='img/logo.jpg')}}" alt="" class="login-logo">
+        <h1 class="company-name">Wedding Vendors</h1>
+    </div>
+    <div class="login-container">
+        <div class="login-card">
+            <img src="{{url_for('static', filename='img/login-wedding.gif')}}" class= "login-card-photo"alt="">
+            <div>
+                <h5 class="login-statement"><span id="vendors">Vendors</span> Log in to your account</h4>
+                <div>
+                    <p style="margin-left: 80px;">Not a member yet? <a href="" class="join">Join Now</a></p>
+                    <form action="/vendors/login" method="post">
+                        {% with messages = get_flashed_messages(category_filter=["login_error"]) %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p class="text-danger" style="padding: 10px;">{{ message }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                        <div class="form-group" style="margin-left: 20px; padding:10px;">
+                            <input type="hidden" name="id">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="login_email"placeholder="Enter email">
+                        </div>
+                        <div class="form-group" style="margin-left: 20px; padding: 10px;">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+                        </div>
+                        <button type="submit" style="color: cyan; font-weight: bolder;" class="btn btn-light" id="login-button">Login</button>
+                    </form>
+                    <div class="vendors-slogan">
+                        <h4>Help Newlyweds Fulfill Their Everlasting Love Through Wedding Vendors!</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="register-card">
+            <div class="card-body">
+                <h2 class="register-header">Join Us!</h2>
+                <form class="text-warning" action="/vendors/register" method="post">
+                    {% with messages = get_flashed_messages(category_filter=["reg_error"]) %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p class="text-danger">{{ message }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <label for="first_name" class="register-form-label">First name:</label>
+                    <input type="text" class="form-control mb-1" name="first_name" id="first_name">
+                    
+                    <label for="last_name" class="register-form-label">Last name:</label>
+                    <input type="text" class="form-control mb-1" name="last_name" id="last_name">
+                    
+                    <label for="email" class="register-form-label">Email:</label>
+                    <input type="text" class="form-control mb-1" name="email" id="email">
+                    
+                    <label for="login_password"class="register-form-label">Password:</label>
+                    <input type="password" class="form-control mb-1" name="password" id="password">
+                    
+                    <label for="c_password" class="register-form-label">Confirm password:</label>
+                    <input type="password" class="form-control mb-1" name="c_password" id="c_password">
+                    
+                    <button type="submit" style="color: cyan; font-weight: bolder;" class="btn btn-light">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

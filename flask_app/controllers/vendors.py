@@ -7,7 +7,7 @@ bcrypt = Bcrypt(app)
 
 @app.route('/vendors/login_page')
 def view_vendor_login():
-    return render_template('test_vendor_login.html')
+    return render_template('vendor_log_reg.html')
 
 
 @app.route('/vendors/login', methods=['POST'])

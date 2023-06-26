@@ -44,7 +44,7 @@
 }
 
 .login-statement{
-    margin-left: 70px;
+    margin-left: 20px;
     padding: 20px;
 }
 
@@ -63,4 +63,32 @@
     margin-top: 20px;
     font-style: italic;
 
+}
+
+#vendors{
+    font-weight: bold;
+    font-style:inherit;
+}
+
+#users{
+    font-weight: bold;
+    font-style:inherit;
+}
+
+.register-card{
+    background-color:rgba(211, 211, 211, 0.162) ;
+    margin-left: 10px;
+    margin-top: 40px;
+    width: 650px;
+    height:550px;
+}
+
+.register-form-label{
+    color: black;
+}
+
+.register-header{
+    color: black;
+    font-weight: bold;
+    font-style: italic;
 }

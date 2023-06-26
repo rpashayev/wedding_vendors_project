@@ -108,6 +108,9 @@ class Vendor:
                     'id': row['senders.id'],
                     'first_name': row['senders.first_name'],
                     'last_name': row['senders.last_name'],
+                    'email': row['email'],
+                    'password': row['password'],
+                    'avatar_path': row['avatar_path'],
                     'created_at': row['senders.created_at'],
                     'updated_at': row['senders.updated_at']
                 }

@@ -22,7 +22,17 @@ class Message:
         query = '''
             INSERT
             INTO messages(content, sender_id, receiver_id)
-            VALUES ( %(image_path)s, %(sender_id)s, %(receiver_id)s );
+            VALUES ( %(content)s, %(sender_id)s, %(receiver_id)s );
         '''
         
         return connectToMySQL(cls.DB).query_db(query, data)
+    
+    @staticmethod
+    def validate_message(message):
+        is_valid = True
+        if len(message['content']) < 3:
+            flash('Message cannot contain less than 3 symbols', 'message_error')
+            is_valid = False
+        if is_valid:
+            flash('Message successfully sent', 'message_error')
+        return is_valid

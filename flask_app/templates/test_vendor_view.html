@@ -63,58 +63,86 @@
             </div>
         </div>
     </nav>
-    <h1>{{ one_vendor.company_name }}</h1>
-    <h2>Gallery</h2>
-    {% for img in one_vendor.images %}
-        <p> {{ img.image_path }} </p>
-    {% endfor %}
-    <p>Rating: {{ avg_rate|round(1) }}  </p>
-    <h5>About</h6>
-    <p>{{ one_vendor.about }}</p>
-    <h5>Description</h6>
-    <p>{{ one_vendor.description }}</p>
-    
-    <h4>Reviews</h4>
-    {% for review in one_vendor.reviews %}
-    <div class="border">
-        <p>by {{ review.user.first_name }} @ {{ review.user.updated_at }}</p>
-        <p>{{ review.rate }}</p>
-        <h6>{{ review.title }}</h6>
-        <p>{{ review.content }}</p>
-        {% if review.user.id == session.id %}
-            <a href="">Edit</a>
-        {% endif %}
-    </div>
-    {% endfor %}
-    <h4 class="text-primary">Add review</h4>
-    {% with messages = get_flashed_messages(category_filter=["review_error"]) %}
-        {% if messages %}
-            {% for message in messages %}
-                <p class="text-danger">{{ message }}</p>
+    <div class="d-flex justify-content-between">
+        <div>
+            <h1>{{ one_vendor.company_name }}</h1>
+            <h2>Gallery</h2>
+            {% for img in one_vendor.images %}
+                <p> {{ img.image_path }} </p>
             {% endfor %}
-        {% endif %}
-    {% endwith %}
-    <form action="/reviews/add" method="post">
-        <label for="rate">Rate</label>
-        <select name="rate" id="rate">
-            <option value="5" selected>5</option>
-            <option value="4">4</option>
-            <option value="3">3</option>
-            <option value="2">2</option>
-            <option value="1">1</option>
-        </select>
-        <label for="title">Title</label>
-        <input type="text" name="title" id="title" placeholder="title here...">
+            <p>Rating: {{ avg_rate|round(1) }}  </p>
+            <h5>About</h6>
+            <p>{{ one_vendor.about }}</p>
+            <h5>Description</h6>
+            <p>{{ one_vendor.description }}</p>
+            
+            <h4>Reviews</h4>
+            {% for review in one_vendor.reviews %}
+            <div class="border">
+                <p>by {{ review.user.first_name }} @ {{ review.user.updated_at }}</p>
+                <p>{{ review.rate }}</p>
+                <h6>{{ review.title }}</h6>
+                <p>{{ review.content }}</p>
+                {% if review.user.id == session.id %}
+                    <a href="">Edit</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <h4 class="text-primary">Add review</h4>
+            {% if session %}
+                {% with messages = get_flashed_messages(category_filter=["review_error"]) %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class="text-danger">{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <form action="/reviews/add" method="post">
+                    <label for="rate">Rate</label>
+                    <select name="rate" id="rate">
+                        <option value="5" selected>5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                    </select>
+                    <label for="title">Title</label>
+                    <input type="text" name="title" id="title" placeholder="title here...">
 
-        <label for="content">Review</label>
-        <input type="text" name="content" id="content" placeholder="content here...">
-        <input type="hidden" name="vendor_id" value="{{ one_vendor.id }}">
-        <input type="hidden" name="user_id" value="{{ session.id }}">
+                    <label for="content">Review</label>
+                    <input type="text" name="content" id="content" placeholder="content here...">
+                    <input type="hidden" name="vendor_id" value="{{ one_vendor.id }}">
+                    <input type="hidden" name="user_id" value="{{ session.id }}">
 
-        <button type="submit">Post</button>
+                    <button type="submit">Post</button>
 
-    </form>
+                </form>
+            {% else %}
+                <p class="text-warning">Login to send a message</p>
+            {% endif %}
+        </div>
+        <div>
+            <h5>Message</h5>
+            {% with messages = get_flashed_messages(category_filter=["message_error"]) %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="text-danger">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            {% if session %}
+                <form action="/messages/sent" method="post">
+                    <label for="content"></label>
+                    <textarea name="content" id="content" rows="5" placeholder="Message content"></textarea>
+                    <input type="hidden" name="sender_id" value="{{ session.id }}">
+                    <input type="hidden" name="receiver_id" value="{{ one_vendor.id }}">
 
-    
+                    <button type="submit">Send</button>
+                </form>
+            {% else %}
+                <p class="text-warning">Login to send a message</p>
+            {% endif %}
+        </div>
+    </div>
 </body>
 </html>

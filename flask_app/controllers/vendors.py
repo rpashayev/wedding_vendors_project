@@ -13,7 +13,7 @@ def view_vendor_login():
 @app.route('/vendors/login', methods=['POST'])
 def vendor_login():
     data = {
-        'email': request.form['login_email']
+        'email': request.form['email']
     }
     login_vendor = vendor.Vendor.get_vendor_by_email(data)
 
@@ -39,13 +39,26 @@ def vendor_register():
         'last_name': request.form['last_name'],
         'email': request.form['email'],
         'password': pw_hash,
-        # 'wish_list': request.form['wish_list'],
-        # 'avatar_path': unique_filename,
+        'company_name': request.form['company_name'],
+        'phone': request.form['phone'],
+        'zip': request.form['zip'],
+        'about': request.form['about'],
+        'description': request.form['description'],
+        'role_id': request.form['role_id']
     }
     
     session['id'] = vendor.Vendor.register_vendor(vendor_data)
     
     return redirect('/')
+
+@app.route('/vendors/view/<int:id>')
+def view_vendor(id):
+    data = {
+        'vendor_id': id
+    }
+    if session['id'] == id:
+        return redirect('vendors/account')
+    return render_template('test_vendor_view.html', one_vendor = vendor.Vendor.view_one_vendor(data), categories = category.Category.get_all_categories(), avg_rate = vendor.Vendor.get_avg_rate(data))
 
 @app.route('/logout')
 def logout():

@@ -35,7 +35,7 @@ class Vendor:
         query = '''
             INSERT 
             INTO users(first_name, last_name, email, password, company_name, phone, zip, about, description, role_id)
-            VALUES ( %(first_name)s, %(last_name)s, %(email)s, %(password)s, %(company_name)s, %(phone)s, %(zip)s, %(about)s, %(description)s), %(role_id)s);
+            VALUES ( %(first_name)s, %(last_name)s, %(email)s, %(password)s, %(company_name)s, %(phone)s, %(zip)s, %(about)s, %(description)s, %(role_id)s);
         '''
         return connectToMySQL(cls.DB).query_db(query, data)
     
@@ -58,10 +58,10 @@ class Vendor:
             FROM users
             LEFT JOIN reviews ON reviews.vendor_id = users.id
             LEFT JOIN users AS reviewers ON reviewers.id = reviews.user_id
-            LEFT JOIN images ON images.vendor_id = users.id
             LEFT JOIN messages ON messages.receiver_id = users.id
             LEFT JOIN users AS senders ON senders.id = messages.sender_id
-            WHERE users.id = %(vendor_id)s;
+            WHERE users.id = %(vendor_id)s
+            ORDER BY reviews.updated_at DESC;
         '''
         results = connectToMySQL(cls.DB).query_db(query, data)
         if len(results) < 1:
@@ -75,7 +75,7 @@ class Vendor:
                     'id': row['reviews.id'],
                     'rate': row['rate'],
                     'title': row['title'],
-                    'content': row['reviews.content'],
+                    'content': row['content'],
                     'created_at': row['reviews.created_at'],
                     'updated_at': row['reviews.updated_at']
                 }
@@ -83,22 +83,19 @@ class Vendor:
                     'id': row['reviewers.id'],
                     'first_name': row['reviewers.first_name'],
                     'last_name': row['reviewers.last_name'],
+                    'email': row['email'],
+                    'password': row['password'],
+                    'avatar_path': row['avatar_path'],
                     'created_at': row['reviewers.created_at'],
                     'updated_at': row['reviewers.updated_at']
                 }
-                one_review = review.Review(review_info)
-                one_review.user = user.User(reviewer_info)
-                one_vendor.reviews.append(one_review)
+                if not one_vendor.reviews or row['reviews.id'] != one_review.id:
+                    one_review = review.Review(review_info)
+                    one_review.user = user.User(reviewer_info)
+                    one_vendor.reviews.append(one_review)
+
+                one_vendor.images = image.Image.get_one_vendor_images(data)
                 
-            if row['images.id'] != None:
-                image_info = {
-                    'id': row['images.id'],
-                    'image_path': row['image_path'],
-                    'created_at': row['images.created_at'],
-                    'updated_at': row['images.updated_at']
-                }
-                one_image = image.Image(image_info)
-                one_vendor.images.append(one_image)
                 
             if row['messages.id'] != None:
                 message_info = {
@@ -111,6 +108,9 @@ class Vendor:
                     'id': row['senders.id'],
                     'first_name': row['senders.first_name'],
                     'last_name': row['senders.last_name'],
+                    'email': row['email'],
+                    'password': row['password'],
+                    'avatar_path': row['avatar_path'],
                     'created_at': row['senders.created_at'],
                     'updated_at': row['senders.updated_at']
                 }
@@ -119,6 +119,18 @@ class Vendor:
                 one_vendor.messages.append(one_message)
                 
         return one_vendor
+    
+    @classmethod
+    def get_avg_rate(cls, data):
+        query = '''
+            SELECT AVG(reviews.rate)
+            FROM reviews
+            JOIN users ON users.id = reviews.vendor_id
+            WHERE users.id = %(vendor_id)s; 
+        '''
+        result = connectToMySQL(cls.DB).query_db(query, data)
+        avg_rate = result[0]['AVG(reviews.rate)']
+        return avg_rate
     
     
     @staticmethod

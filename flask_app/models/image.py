@@ -22,3 +22,18 @@ class Image:
         '''
         
         return connectToMySQL(cls.DB).query_db(query, data)
+    
+    @classmethod
+    def get_one_vendor_images(cls, data):
+        images = []
+        query = '''
+            SELECT *
+            FROM images
+            LEFT JOIN users ON users.id = images.vendor_id
+            WHERE users.id = %(vendor_id)s
+    '''
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        for img in results:
+            images.append(cls(img))
+        
+        return images

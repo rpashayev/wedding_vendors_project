@@ -65,19 +65,29 @@
     </nav>
         <div class="col-3">
             <h5>Messages</h5>
-            <ul>
+            <ul class="list-group>
                 {% for msg in msgs %}
-                        <li>
-                            {{msg.company_name}}
-                            {% if msg.company_name %}
-                                <p>{{msg.sender.company_name}}</p>
-                            {% else %}
-                                <p>{{msg.sender.first_name}} {{msg.sender.last_name}}</p>
-                            {% endif %}
-                        </li>
-                    
+                    {% if msg.sender.id == session.id %}
+                        <li class="list-group-item list-group-item-success text-end">
+                    {% else %}
+                        <li class="list-group-item list-group-item-secondary text-start">
+                    {% endif %}
+                    {% if msg.sender.company_name %}
+                        <p>{{msg.sender.company_name}}</p>
+                    {% else %}
+                        <p>{{msg.sender.first_name}} {{msg.sender.last_name}}</p>
+                    {% endif %}
+                        <p> {{msg.content}} </p>
+                    </li>
                 {% endfor %}
             </ul>
+            <form action="/messages/sent" method="post">
+                <label for="content"></label>
+                <textarea name="content" id="content" rows="3" placeholder="Message content"></textarea>
+                <input type="hidden" name="sender_id" value="{{ session.id }}">
+                <input type="hidden" name="receiver_id" value="{{ session.cp_id }}">
+                <button type="submit">Send</button>
+            </form>
         </div>
     </div>
 </body>

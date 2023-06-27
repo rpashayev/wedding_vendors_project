@@ -6,11 +6,12 @@ from flask_app.models import category, message, user, vendor, ad, review, image
 
 @app.route('/messages/sent', methods=['POST'])
 def send_message():
+    msg_page = request.referrer
     if not message.Message.validate_message(request.form):
-        return redirect(f'/vendors/view/{request.form["receiver_id"]}')
+        return redirect(msg_page)
         
     message.Message.send_message(request.form)
-    return redirect(f'/vendors/view/{request.form["receiver_id"]}')
+    return redirect(msg_page)
 
 @app.route('/messages/get', methods=['POST'])
 def get_messages():

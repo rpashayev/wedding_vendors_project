@@ -65,6 +65,13 @@
     </nav>
         <div class="col-3">
             <h5>Messages</h5>
+            {% with messages = get_flashed_messages(category_filter=["message_error"]) %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="text-danger">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
             <ul class="list-group">
                 {% for msg in msgs %}
                     {% if msg.sender.id == session.id %}

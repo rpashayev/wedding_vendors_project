@@ -87,7 +87,7 @@ class Ad:
     def edit_ad(cls, data):
         query = '''
             UPDATE ads
-            SET ad_content=%(ad_content)s, category = %(category_ids)s, image = %(image_id)s, vendor = %(vendor_id)s;
+            SET ad_content=%(ad_content)s, category_id = %(category_id)s
             WHERE ads.id = %(ad_id)s;
         '''
         return connectToMySQL(cls.DB).query_db(query, data)

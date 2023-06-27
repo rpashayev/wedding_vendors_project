@@ -46,11 +46,13 @@ def edit_page_ad(ad_id):
 @app.route('/ads/edit', methods=['POST'])
 def edit_ad():
     data = {
+        'ad_id': request.form['ad_id'],
         'ad_content': request.form['ad_content'],
         'category_id': request.form['category_id'],
-        'image_id': request.form['image_id'],
         'vendor_id': session['id']
     }
+    if 'id' not in session:
+        return redirect('/')
     
     ad.Ad.edit_ad(data)
     return redirect('/vendors/account')

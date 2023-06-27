@@ -56,6 +56,6 @@ class Image:
     def validate_file(filename):
         is_valid = True
         if not Image.allowed_file(filename):
-            flash('Incorrect filetype selected', 'reg_error')
+            flash('Incorrect filetype selected', 'img_error')
             is_valid = False
         return is_valid

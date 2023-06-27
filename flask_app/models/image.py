@@ -2,7 +2,11 @@ from flask import flash
 from flask_app import app
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models import category, message, user, vendor
+from werkzeug.utils import secure_filename
+from datetime import datetime
 import os
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 class Image:
     DB = 'wedding_vendors_schema'
@@ -45,7 +49,7 @@ class Image:
         filename = secure_filename(image.filename)
         timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
         unique_filename = f'{timestamp}_{filename}'
-        avatar.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
+        image.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
         return unique_filename
     
     @staticmethod

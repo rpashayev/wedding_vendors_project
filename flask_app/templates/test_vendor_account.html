@@ -67,13 +67,13 @@
         <div class="col-3">
             <h1>{{ one_vendor.company_name }}</h1>
             <h2>Gallery</h2>
-            <form action="/images/add", method="post">
+            <form action="/images/add", method="post", enctype="multipart/form-data">
                 <label for="image">Upload image</label>
                 <input type="file" class="form-control" name="image_path" id="image" accept="image/*" placeholder="Upload image">
-                <button type="submit" class="btn text-dark mt-2">Upload</button>
+                <button type="submit" class="btn btn-dark mt-2">Upload</button>
             </form>
             {% for img in one_vendor.images %}
-                <p> {{ img.image_path }} </p>
+                <img src="{{ url_for('static', filename='assets/uploads/' + img.image_path) }}" alt="ad image">  
             {% endfor %}
             <p>Rating: {{ avg_rate|round(1) }}  </p>
             <h5>About</h6>

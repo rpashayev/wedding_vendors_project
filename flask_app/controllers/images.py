@@ -7,10 +7,10 @@ def add_image():
     if 'id' not in session:
         return redirect('/')
     data = {
-        'image_id':image.Image.upload_file(request.form['image_path']),
+        'image_path':image.Image.upload_file(request.files['image_path']),
         'vendor_id': session['id']
     }
-    if not ad.Ad.validate_file(request.files['image_path'].filename):
+    if not image.Image.validate_file(request.files['image_path'].filename):
         return redirect('/vendors/account')
     image.Image.add_image(data)
   

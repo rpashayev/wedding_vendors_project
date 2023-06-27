@@ -70,6 +70,7 @@
             <form action="/images/add", method="post">
                 <label for="image">Upload image</label>
                 <input type="file" class="form-control" name="image_path" id="image" accept="image/*" placeholder="Upload image">
+                <button type="submit" class="btn text-dark mt-2">Upload</button>
             </form>
             {% for img in one_vendor.images %}
                 <p> {{ img.image_path }} </p>

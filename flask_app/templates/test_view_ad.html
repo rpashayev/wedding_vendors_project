@@ -74,7 +74,12 @@
                 {% endif %}
             {% endwith %}
             
-            
+            <img src="{{ ad.image.image_path }}" alt="ad image">
+            <h3>Category</h3>
+            <p>{{ ad.category.category }}</p>
+
+            <h3>Ad content</h3>
+            <p>{{ ad.ad_content }}</p>
             
         </div>
     </div>

@@ -2,6 +2,7 @@ from flask import flash
 from flask_app import app
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models import category, message, user, vendor
+import os
 
 class Image:
     DB = 'wedding_vendors_schema'

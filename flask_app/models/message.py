@@ -17,26 +17,31 @@ class Message:
         self.sender = None
         self.receiver = None
     
-    # @classmethod
-    # def send_message(cls, data):
-    #     query = '''
-    #         INSERT
-    #         INTO messages(content, sender_id, receiver_id)
-    #         VALUES ( %(content)s, %(sender_id)s, %(receiver_id)s );
-    #     '''
-        
-    #     return connectToMySQL(cls.DB).query_db(query, data)
-    
     @classmethod
-    def get_incoming_messages(cls, data):
+    def send_message(cls, data):
         query = '''
-            SELECT *
-            FROM messages
-            JOIN users ON users.id ON messages.receiver_id
-            WHERE messages.receiver_id = %(id)s;
+            INSERT
+            INTO messages(content, sender_id, receiver_id)
+            VALUES ( %(content)s, %(sender_id)s, %(receiver_id)s );
         '''
         
         return connectToMySQL(cls.DB).query_db(query, data)
+    
+    @classmethod
+    def get_all_messages(cls, data):
+        msg_exchanges = []
+        query = '''
+            SELECT DISTINCT users.*
+            FROM messages
+            JOIN users ON (users.id = messages.sender_id OR users.id = messages.receiver_id)
+            WHERE (messages.sender_id = %(id)s OR messages.receiver_id = %(id)s) AND (users.id != %(id)s);
+        '''
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        for result in results:
+            exchange = vendor.Vendor(result)
+            msg_exchanges.append(exchange)
+        
+        return msg_exchanges
     
     
     @staticmethod

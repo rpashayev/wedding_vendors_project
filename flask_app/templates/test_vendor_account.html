@@ -121,7 +121,15 @@
                             <td>{{ ad.ad_content }}</td>
                             <td>{{ ad.category.category }}</td>
                             <td>{{ ad.created_at.strftime('%b %d, %Y') }}</td>
-                            <td><a href="">Edit</a> | <a href="">Delete</a></td>
+                            <td class="d-flex">
+                                <form action="" class="me-2">
+                                    <button>Edit</button>
+                                </form>
+                                <form action="/ads/delete" method="post">
+                                    <input type="hidden" name="ad_id" value="{{ ad.id }}">
+                                    <button>Delete</button>
+                                </form>
+                            </td>
                         </tr>    
                     {% endfor %}
                 </tbody>
@@ -129,8 +137,14 @@
         </div>
         <div class="col-3">
             <h5>Messages</h5>
-            {% for msg in one_vendor.messages %}
-                {{ msg.sender.first_name }}
+            {% for msg in exchange %}
+                <ul>
+                    {% if msg.company_name %}
+                        <li>{{ msg.company_name }}</li>
+                    {% else %}
+                        <li>{{ msg.first_name }} {{ msg.last_name }}</li>
+                    {% endif %}
+                </ul>
             {% endfor %}
         </div>
     </div>

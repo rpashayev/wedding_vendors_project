@@ -15,4 +15,12 @@ class Ad:
         self.category = None
         self.image = None
 
-    
+    @classmethod
+    def delete_add(cls, data):
+        query = '''
+            DELETE
+            FROM ads
+            WHERE ads.id = %(ad_id)s;
+        
+        '''
+        return connectToMySQL(cls.DB).query_db(query, data)

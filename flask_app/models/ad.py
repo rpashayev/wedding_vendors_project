@@ -96,14 +96,14 @@ class Ad:
     @staticmethod
     def validate_ad(ad):
         isValid = True
-        if Ad.category_ad(ad):
-            flash('You already have ad from this category', 'ad_error')
-            is_valid = False
-            return isValid
+        # if Ad.category_ad(ad):
+        #     flash('You already have ad from this category', 'ad_error')
+        #     isValid = False
+        #     return isValid
         if len(ad['ad_content']) < 3 or AD_REGEX.match(ad['ad_content']):
             flash('Ad content cannot be empty', 'ad_error')
-            is_valid = False
-        if not ad['image_id']:
-            flash('Please select the image for your ad', 'ad_error')
-            is_valid = False
+            isValid = False
+        # if not ad['image_id']:
+        #     flash('Please select the image for your ad', 'ad_error')
+        #     is_valid = False
         return isValid

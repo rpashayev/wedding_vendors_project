@@ -40,7 +40,7 @@ def edit_page_ad(ad_id):
     one_ad = ad.Ad.view_ad(data)
     if one_ad.vendor != session['id']:
         return redirect('/')
-    
+    session['current_ad'] = ad_id
     return render_template('test_view_ad.html', ad = one_ad, categories = category.Category.get_all_categories())
 
 @app.route('/ads/edit', methods=['POST'])
@@ -53,6 +53,9 @@ def edit_ad():
     }
     if 'id' not in session:
         return redirect('/')
+    
+    if not ad.Ad.validate_ad(data):
+        return redirect(f'/ads/view/{session["current_ad"]}')
     
     ad.Ad.edit_ad(data)
     return redirect('/vendors/account')

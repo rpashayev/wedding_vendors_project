@@ -124,3 +124,29 @@
     margin: auto;
     align-items: center;
 }
+
+.ad_card{
+    width: 300px;
+    box-shadow: grey 2px 2px 2px;
+    border-radius: 5%;
+}
+.ad_card_photo{
+    width: 300px;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+}
+
+.ad_card_star{
+    width: 50px;
+}
+
+.name_and_rating{
+    align-items: center;
+    padding: 10px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.rating_and_star{
+    display: flex;
+    margin-right: 10px;
+}

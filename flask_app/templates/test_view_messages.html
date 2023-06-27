@@ -63,92 +63,19 @@
             </div>
         </div>
     </nav>
-    <div class="d-flex justify-content-between col-12">
-        <div class="col-3">
-            <h1>{{ one_vendor.company_name }}</h1>
-            <h2>Gallery</h2>
-            {% for img in one_vendor.images %}
-                <p> {{ img.image_path }} </p>
-            {% endfor %}
-            <p>Rating: {{ avg_rate|round(1) }}  </p>
-            <h5>About</h6>
-            <p>{{ one_vendor.about }}</p>
-            <h5>Description</h6>
-            <p>{{ one_vendor.description }}</p>
-            
-            <h4>Reviews</h4>
-            {% for review in one_vendor.reviews %}
-            <div class="border">
-                <p>by {{ review.user.first_name }} @ {{ review.user.updated_at }}</p>
-                <p>{{ review.rate }}</p>
-                <h6>{{ review.title }}</h6>
-                <p>{{ review.content }}</p>
-                {% if review.user.id == session.id %}
-                    <a href="">Edit</a>
-                {% endif %}
-            </div>
-            {% endfor %}
-            {% if session %}
-                {% with messages = get_flashed_messages(category_filter=["review_error"]) %}
-                    {% if messages %}
-                        {% for message in messages %}
-                            <p class="text-danger">{{ message }}</p>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-                
-            {% else %}
-                <p class="text-warning">Login to send a message</p>
-            {% endif %}
-        </div>
-        <div class="col-6">
-            <h5>Ads</h5>
-            <button>Create</button>
-            <table>
-                <thead class="table-danger">
-                    <tr>
-                        <th>Ad img</th>
-                        <th>Content</th>
-                        <th>Category</th>
-                        <th>Created</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for ad in one_vendor.ads %}
-                        <tr>
-                            <td>{{ ad.image.image_path }}</td>
-                            <td>{{ ad.ad_content }}</td>
-                            <td>{{ ad.category.category }}</td>
-                            <td>{{ ad.created_at.strftime('%b %d, %Y') }}</td>
-                            <td class="d-flex">
-                                <form action="" class="me-2">
-                                    <button>Edit</button>
-                                </form>
-                                <form action="/ads/delete" method="post">
-                                    <input type="hidden" name="ad_id" value="{{ ad.id }}">
-                                    <button>Delete</button>
-                                </form>
-                            </td>
-                        </tr>    
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
         <div class="col-3">
             <h5>Messages</h5>
             <ul>
-                {% for msg in exchange %}
-                    <form action="/messages/get" method="post">
+                {% for msg in msgs %}
                         <li>
+                            {{msg.company_name}}
                             {% if msg.company_name %}
-                                <button type="submit" class="btn btn-link p-0 m-0"> {{ msg.company_name }} </button>
+                                <p>{{msg.sender.company_name}}</p>
                             {% else %}
-                                <button type="submit" class="btn btn-link p-0 m-0"> {{ msg.first_name }} {{ msg.last_name }} </button>
+                                <p>{{msg.sender.first_name}} {{msg.sender.last_name}}</p>
                             {% endif %}
-                            <input type="hidden" name="cp_id" value="{{ msg.id }}">
                         </li>
-                    </form>
+                    
                 {% endfor %}
             </ul>
         </div>

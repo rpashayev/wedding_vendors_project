@@ -17,15 +17,27 @@ class Message:
         self.sender = None
         self.receiver = None
     
+    # @classmethod
+    # def send_message(cls, data):
+    #     query = '''
+    #         INSERT
+    #         INTO messages(content, sender_id, receiver_id)
+    #         VALUES ( %(content)s, %(sender_id)s, %(receiver_id)s );
+    #     '''
+        
+    #     return connectToMySQL(cls.DB).query_db(query, data)
+    
     @classmethod
-    def send_message(cls, data):
+    def get_incoming_messages(cls, data):
         query = '''
-            INSERT
-            INTO messages(content, sender_id, receiver_id)
-            VALUES ( %(content)s, %(sender_id)s, %(receiver_id)s );
+            SELECT *
+            FROM messages
+            JOIN users ON users.id ON messages.receiver_id
+            WHERE messages.receiver_id = %(id)s;
         '''
         
         return connectToMySQL(cls.DB).query_db(query, data)
+    
     
     @staticmethod
     def validate_message(message):

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark p-1 bg-dark text-white">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link mx-2 active" aria-current="page" href="/">Home</a>
+                    </li>
+                    {% for category in categories %}
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="/categories/{{ category.category }}">{{ category.category }}</a>
+                        </li>    
+                    {% endfor %}
+                    
+                    {% if session %}
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="/vendors/account">Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="/logout">Logout</a>
+                        </li>
+                    {% else %}
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                User
+                                </a>
+                            </li>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">Login/Registration</a></li>
+                            </ul>
+                        </ul>
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Vendor
+                                </a>
+                            </li>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">Login/Registration</a></li>
+                            </ul>
+                        </ul>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="/users/login_page">User login/registration TEST</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="/vendors/login_page">Vendor login/registration TEST</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="d-flex justify-content-between col-12">
+        <div class="col-3">
+            <h1>{{ one_vendor.company_name }}</h1>
+            <h2>Gallery</h2>
+            {% for img in one_vendor.images %}
+                <p> {{ img.image_path }} </p>
+            {% endfor %}
+            <p>Rating: {{ avg_rate|round(1) }}  </p>
+            <h5>About</h6>
+            <p>{{ one_vendor.about }}</p>
+            <h5>Description</h6>
+            <p>{{ one_vendor.description }}</p>
+            
+            <h4>Reviews</h4>
+            {% for review in one_vendor.reviews %}
+            <div class="border">
+                <p>by {{ review.user.first_name }} @ {{ review.user.updated_at }}</p>
+                <p>{{ review.rate }}</p>
+                <h6>{{ review.title }}</h6>
+                <p>{{ review.content }}</p>
+                {% if review.user.id == session.id %}
+                    <a href="">Edit</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% if session %}
+                {% with messages = get_flashed_messages(category_filter=["review_error"]) %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class="text-danger">{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
+            {% else %}
+                <p class="text-warning">Login to send a message</p>
+            {% endif %}
+        </div>
+        <div class="col-6">
+            <h5>Ads</h5>
+            <button>Create</button>
+            <table>
+                <thead class="table-danger">
+                    <tr>
+                        <th>Ad img</th>
+                        <th>Content</th>
+                        <th>Category</th>
+                        <th>Created</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ad in one_vendor.ads %}
+                        <tr>
+                            <td>{{ ad.image.image_path }}</td>
+                            <td>{{ ad.ad_content }}</td>
+                            <td>{{ ad.category.category }}</td>
+                            <td>{{ ad.created_at.strftime('%b %d, %Y') }}</td>
+                            <td><a href="">Edit</a> | <a href="">Delete</a></td>
+                        </tr>    
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-3">
+            <h5>Messages</h5>
+            {% for msg in one_vendor.messages %}
+                {{ msg.sender.first_name }}
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

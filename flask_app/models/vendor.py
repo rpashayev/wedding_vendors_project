@@ -1,7 +1,7 @@
 from flask import flash
 from flask_app import app
 from flask_app.config.mysqlconnection import connectToMySQL
-from flask_app.models import category, message, review, image, user
+from flask_app.models import category, message, review, image, user, ad
 import re, os
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
@@ -58,17 +58,23 @@ class Vendor:
             FROM users
             LEFT JOIN reviews ON reviews.vendor_id = users.id
             LEFT JOIN users AS reviewers ON reviewers.id = reviews.user_id
-            LEFT JOIN messages ON messages.receiver_id = users.id
-            LEFT JOIN users AS senders ON senders.id = messages.sender_id
+            LEFT JOIN ads ON ads.vendor_id = users.id
+            LEFT JOIN categories ON categories.id = ads.category_id
+            LEFT JOIN images ON images.id = ads.image_id
             WHERE users.id = %(vendor_id)s
-            ORDER BY reviews.updated_at DESC;
+            ORDER BY reviews.updated_at;
         '''
+        # LEFT JOIN messages ON messages.receiver_id = users.id
+        # LEFT JOIN users AS senders ON senders.id = messages.sender_id
         results = connectToMySQL(cls.DB).query_db(query, data)
         if len(results) < 1:
             return False
 
         one_vendor = cls(results[0])
-
+        
+        ads_dict = {}
+        
+        
         for row in results:
             if row['reviews.id'] != None:
                 review_info = {
@@ -96,27 +102,30 @@ class Vendor:
 
                 one_vendor.images = image.Image.get_one_vendor_images(data)
                 
-                
-            if row['messages.id'] != None:
-                message_info = {
-                    'id': row['messages.id'],
-                    'content': row['messages.content'],
-                    'created_at': row['messages.created_at'],
-                    'updated_at': row['messages.updated_at']
-                }
-                sender_info = {
-                    'id': row['senders.id'],
-                    'first_name': row['senders.first_name'],
-                    'last_name': row['senders.last_name'],
-                    'email': row['email'],
-                    'password': row['password'],
-                    'avatar_path': row['avatar_path'],
-                    'created_at': row['senders.created_at'],
-                    'updated_at': row['senders.updated_at']
-                }
-                one_message = message.Message(message_info)
-                one_message.sender = user.User(sender_info)
-                one_vendor.messages.append(one_message)
+            if row['ads.id'] != None and row['ads.id'] not in ads_dict:
+                    ad_info = {
+                        'id': row['ads.id'],
+                        'ad_content': row['ad_content'],
+                        'created_at': row['ads.created_at'],
+                        'updated_at': row['ads.updated_at']
+                    }
+                    category_info = {
+                        'id': row['categories.id'],
+                        'category': row['category'],
+                        'created_at': row['categories.created_at'],
+                        'updated_at': row['categories.updated_at']
+                    }
+                    image_info = {
+                        'id': row['images.id'],
+                        'image_path': row['image_path'],
+                        'created_at': row['images.created_at'],
+                        'updated_at': row['images.updated_at']
+                    }
+                    one_ad = ad.Ad(ad_info)
+                    one_ad.category = category.Category(category_info)
+                    one_ad.image = image.Image(image_info)                    
+                    one_vendor.ads.append(one_ad)
+                    ads_dict[row['ads.id']] = one_ad
                 
         return one_vendor
     
@@ -129,6 +138,10 @@ class Vendor:
             WHERE users.id = %(vendor_id)s; 
         '''
         result = connectToMySQL(cls.DB).query_db(query, data)
+        
+        if not result[0]['AVG(reviews.rate)']:
+            avg_rate = 0
+            return avg_rate
         avg_rate = result[0]['AVG(reviews.rate)']
         return avg_rate
     

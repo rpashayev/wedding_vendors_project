@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <title>Category View Page</title>
+</head>
+<body>
+    <nav class="navbar bg-body-tertiary fixed-top" >
+        <div class="container-fluid" >
+            <a class="navbar-brand" href="#" style="font-style: italic; font-weight: bolder;">Wedding Vendors</a>
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: whitesmoke; color: black; font-weight: bold;">
+                Categories
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                {% for category in categories %}
+                    <li><button class="dropdown-item" type="button"><a href="/categories/{{ category.category }}" style="text-decoration: none; color: black;">{{ category.category }}</a></button></li>
+                {% endfor %}
+                </ul>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Wedding Venors Panel</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    {% if session %}
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="/vendors/account">Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="/logout">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Vendors
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="vendors/login_page">Login</a></li>
+                                <li><a class="dropdown-item" href="vednors/login_page">Registration</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="users_login" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Users
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Login</a></li>
+                                <li><a class="dropdown-item" href="#">Registration</a></li>
+                            </ul>
+                        </li>
+                        {%endif%}
+                    
+                    
+                </ul>
+                <form class="d-flex mt-3" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="vendors_main_container">
+        <div class="vendors_main_top">
+            <img src="{{url_for('static', filename='img/logo.jpg')}}" alt="" class="main_logo">
+            <h1 class="company-name" style="font-size: 70px; font-style: italic;"> Wedding {{cat_ads.category}}</h1>
+            <img src="{{url_for('static', filename='img/mainpage.jpg')}}" alt="" class="main_page_image">
+        </div>
+        <div>
+            <h1>Category</h1>
+            <h2>{{ cat_ads.category }}</h2>
+            <div class="d-flex">
+                {% for ad in cat_ads.ads %}
+                    <div class="ad_card">
+                        <a href="/vendors/view/{{ ad.vendor.id }}" class="text-decoration-none">
+                            <img src="/static/img/{{ ad.image.image_path}}" alt="" class="ad_card_photo">
+                            <h3>{{ ad.vendor.company_name }}</h3>
+                            <div class="rating_and_star">
+                                <img src="{{url_for('static', filename='img/star.webp')}}" alt="" class="ad_card_star">
+                                <p> {{ ad.vendor.reviews[0]|round(1) }} | {{ ad.ad_content }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

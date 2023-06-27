@@ -12,4 +12,4 @@ def get_category(category_name):
     data = {
         'category_name': category_name
     }
-    return render_template('test_category_view.html', cat_ads = category.Category.get_category_ads(data), categories = category.Category.get_all_categories())
+    return render_template('category_view.html', cat_ads = category.Category.get_category_ads(data), categories = category.Category.get_all_categories())

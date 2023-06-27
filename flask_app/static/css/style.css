@@ -108,7 +108,7 @@
 }
 .vendors_main_top{
     display: flex;
-    border: solid grey 2px;
+    box-shadow: grey 3px 4px 5px;
 }
 
 .main_logo{
@@ -127,7 +127,7 @@
 
 .ad_card{
     width: 300px;
-    box-shadow: grey 2px 2px 2px;
+    box-shadow: grey 3px 4px 5px;
     border-radius: 5%;
 }
 .ad_card_photo{
@@ -149,4 +149,8 @@
 .rating_and_star{
     display: flex;
     margin-right: 10px;
+}
+
+.category-container{
+    margin-top: 80px;
 }

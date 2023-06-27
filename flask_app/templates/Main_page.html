@@ -14,7 +14,7 @@
         <div class="container-fluid" >
             <a class="navbar-brand" href="#" style="font-style: italic; font-weight: bolder;">Wedding Vendors</a>
             <div class="btn-group">
-                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: turquoise; color: black; font-weight: bold;">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: whitesmoke; color: black; font-weight: bold;">
                 Categories
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -87,12 +87,14 @@
                 <h2>{{ row.category }}</h2>
                 <div class="d-flex">
                     {% for ad in row.ads %}
-                        <div class="card m-4">
+                        <div class="ad_card">
                             <a href="/vendors/view/{{ ad.vendor.id }}" class="text-decoration-none">
-                                <p>Ad photo: {{ ad.image.image_path}}</p>
-                                <p>Vendor name: {{ ad.vendor.company_name }}</p>
-                                <p>Ad text: {{ ad.ad_content }}</p>
-                                <p>Rating: {{ ad.vendor.reviews[0]|round(1) }}</p>
+                                <img src="/static/img/{{ ad.image.image_path}}" alt="" class="ad_card_photo">
+                                <h3>{{ ad.vendor.company_name }}</h3>
+                                <div class="rating_and_star">
+                                    <img src="{{url_for('static', filename='img/star.webp')}}" alt="" class="ad_card_star">
+                                    <p> {{ ad.vendor.reviews[0]|round(1) }} | {{ ad.ad_content }}</p>
+                                </div>
                             </a>
                         </div>
                     {% endfor %}

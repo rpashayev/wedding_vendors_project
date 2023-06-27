@@ -37,3 +37,25 @@ class Image:
             images.append(cls(img))
         
         return images
+
+
+    @staticmethod
+    def upload_file(image):
+        filename = secure_filename(image.filename)
+        timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+        unique_filename = f'{timestamp}_{filename}'
+        avatar.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
+        return unique_filename
+    
+    @staticmethod
+    def allowed_file(filename):
+        return '.' in filename and \
+            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    
+    @staticmethod
+    def validate_file(filename):
+        is_valid = True
+        if not Image.allowed_file(filename):
+            flash('Incorrect filetype selected', 'reg_error')
+            is_valid = False
+        return is_valid

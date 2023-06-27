@@ -67,6 +67,10 @@
         <div class="col-3">
             <h1>{{ one_vendor.company_name }}</h1>
             <h2>Gallery</h2>
+            <form action="/images/add", method="post">
+                <label for="image">Upload image</label>
+                <input type="file" class="form-control" name="image_path" id="image" accept="image/*" placeholder="Upload image">
+            </form>
             {% for img in one_vendor.images %}
                 <p> {{ img.image_path }} </p>
             {% endfor %}

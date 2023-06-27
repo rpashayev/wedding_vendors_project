@@ -99,7 +99,28 @@
 }
 
 .main_page_image_container{
-    float: right;
     margin-top: 40px; 
     /* overflow: hidden; */
+}
+
+.vendors_main_container{
+    margin-top: 50px;
+}
+.vendors_main_top{
+    display: flex;
+    border: solid black 5px;
+}
+
+.main_logo{
+    position: absolute;
+    align-items: center;
+    width: 100px;
+    top: 26%;
+    bottom: 70%;
+    right: 90%;
+}
+
+.main_company_name{
+    margin: auto;
+    align-items: center;
 }

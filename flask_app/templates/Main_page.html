@@ -74,28 +74,32 @@
             </div>
         </div>
     </nav>
-    <div class="main_page_image_container">
-        <img src="{{url_for('static', filename='img/mainpage.jpg')}}" alt="" class="main_page_image">
-    </div>
-    <div>
-        <h1>Category</h1>
-    {% for row in top_ads %}
-        <div>
-            <h2>{{ row.category }}</h2>
-            <div class="d-flex">
-                {% for ad in row.ads %}
-                    <div class="card m-4">
-                        <a href="/vendors/view/{{ ad.vendor.id }}" class="text-decoration-none">
-                            <p>Ad photo: {{ ad.image.image_path}}</p>
-                            <p>Vendor name: {{ ad.vendor.company_name }}</p>
-                            <p>Ad text: {{ ad.ad_content }}</p>
-                            <p>Rating: {{ ad.vendor.reviews[0]|round(1) }}</p>
-                        </a>
-                    </div>
-                {% endfor %}
-            </div>
+    <div class="vendors_main_container">
+        <div class="vendors_main_top">
+            <img src="{{url_for('static', filename='img/logo.jpg')}}" alt="" class="main_logo">
+            <h1 class="company-name" style="font-size: 70px; font-style: italic;">Wedding Vendors</h1>
+            <img src="{{url_for('static', filename='img/mainpage.jpg')}}" alt="" class="main_page_image">
         </div>
-    {% endfor %}
+        <div>
+            <h1>Category</h1>
+        {% for row in top_ads %}
+            <div>
+                <h2>{{ row.category }}</h2>
+                <div class="d-flex">
+                    {% for ad in row.ads %}
+                        <div class="card m-4">
+                            <a href="/vendors/view/{{ ad.vendor.id }}" class="text-decoration-none">
+                                <p>Ad photo: {{ ad.image.image_path}}</p>
+                                <p>Vendor name: {{ ad.vendor.company_name }}</p>
+                                <p>Ad text: {{ ad.ad_content }}</p>
+                                <p>Rating: {{ ad.vendor.reviews[0]|round(1) }}</p>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        </div>
     </div>
 
 </body>

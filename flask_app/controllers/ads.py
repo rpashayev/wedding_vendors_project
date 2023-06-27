@@ -32,9 +32,16 @@ def create_ad():
     ad.Ad.new_ad(data)
     return redirect('/vendors/account')
 
-@app.route('/ads/view')
-def edit_page_ad():
-    return render_template('test_edit_ad.html')
+@app.route('/ads/view/<int:ad_id>')
+def edit_page_ad(ad_id):
+    data = {
+        'ad_id': ad_id
+    }
+    one_ad = ad.Ad.view_ad(data)
+    if one_ad.vendor != session['id']:
+        return redirect('/')
+    
+    return render_template('test_view_ad.html', ad = one_ad, categories = category.Category.get_all_categories())
 
 @app.route('/ads/edit', methods=['POST'])
 def edit_ad():

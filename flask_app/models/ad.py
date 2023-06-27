@@ -1,7 +1,7 @@
 from flask import flash
 from flask_app import app
 from flask_app.config.mysqlconnection import connectToMySQL
-from flask_app.models import category, message, user, vendor
+from flask_app.models import category, message, user, vendor, image
 import re
 
 AD_REGEX = re.compile(r'^\s*$')
@@ -52,6 +52,36 @@ class Ad:
             VALUES %(ad_content)s, %(category_id)s, %(image_id)s, %(vendor_id)s ;
         '''
         return connectToMySQL(cls.DB).query_db(query, data)
+
+    @classmethod
+    def view_ad(cls, data):
+        query = '''
+            SELECT *
+            FROM ads
+            JOIN categories ON categories.id = ads.category_id
+            JOIN images ON images.id = ads.image_id
+            WHERE ads.id = %(ad_id)s;
+        '''
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        one_ad = cls(results[0])
+        one_ad.vendor = results[0]['vendor_id']
+        
+        category_info = {
+            'id': results[0]['categories.id'],
+            'category': results[0]['category'],
+            'created_at': results[0]['categories.created_at'],
+            'updated_at': results[0]['categories.updated_at']
+        }
+        image_info = {
+            'id': results[0]['images.id'],
+            'image_path': results[0]['image_path'],
+            'created_at': results[0]['images.created_at'],
+            'updated_at': results[0]['images.updated_at']
+        }
+        one_ad.category = category.Category(category_info)
+        one_ad.image = image.Image(image_info)
+        
+        return one_ad
 
     @classmethod
     def edit_ad(cls, data):

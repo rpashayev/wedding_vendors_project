@@ -127,9 +127,7 @@
                             <td>{{ ad.category.category }}</td>
                             <td>{{ ad.created_at.strftime('%b %d, %Y') }}</td>
                             <td class="d-flex">
-                                <form action="" class="me-2">
-                                    <button>Edit</button>
-                                </form>
+                                <a href="/ads/view/{{ ad.id }}" class="btn btn-warning py-0 px-1 me-2">Edit</a>
                                 <form action="/ads/delete" method="post">
                                     <input type="hidden" name="ad_id" value="{{ ad.id }}">
                                     <button>Delete</button>

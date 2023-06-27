@@ -65,20 +65,21 @@
     </nav>
         <div class="col-3">
             <h5>Messages</h5>
-            <ul class="list-group>
+            <ul class="list-group">
                 {% for msg in msgs %}
                     {% if msg.sender.id == session.id %}
                         <li class="list-group-item list-group-item-success text-end">
+                            <p class="text-warning m-0">Me</p>   
                     {% else %}
                         <li class="list-group-item list-group-item-secondary text-start">
+                            {% if msg.sender.company_name %}
+                                <p>{{msg.sender.company_name}}</p>
+                            {% else %}
+                                <p>{{msg.sender.first_name}} {{msg.sender.last_name}}</p>
+                            {% endif %}
                     {% endif %}
-                    {% if msg.sender.company_name %}
-                        <p>{{msg.sender.company_name}}</p>
-                    {% else %}
-                        <p>{{msg.sender.first_name}} {{msg.sender.last_name}}</p>
-                    {% endif %}
-                        <p> {{msg.content}} </p>
-                    </li>
+                            <p> {{msg.content}} </p>
+                        </li>
                 {% endfor %}
             </ul>
             <form action="/messages/sent" method="post">

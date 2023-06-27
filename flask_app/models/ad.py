@@ -2,6 +2,7 @@ from flask import flash
 from flask_app import app
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models import category, message, user, vendor
+import re
 
 AD_REGEX = re.compile(r'^\s*$')
 

@@ -15,7 +15,7 @@ def delete_vendor_ad():
 
 @app.route('/ads/new')
 def new_ad():
-    rerurn render_template('test_create_ad.html')
+    return render_template('test_create_ad.html')
 
 @app.route('/ads/create', methods = ['POST'])
 def create_ad():
@@ -34,11 +34,11 @@ def create_ad():
 
 @app.route('/ads/view')
 def edit_page_ad():
-    rerurn render_template('test_edit_ad.html')
+    return render_template('test_edit_ad.html')
 
 @app.route('/ads/edit', methods=['POST'])
 def edit_ad():
-        data = {
+    data = {
         'ad_content': request.form['ad_content'],
         'category_id': request.form['category_id'],
         'image_id': request.form['image_id'],
@@ -46,4 +46,4 @@ def edit_ad():
     }
     
     ad.Ad.edit_ad(data)
-    rerurn redirect('/vendors/account')
+    return redirect('/vendors/account')

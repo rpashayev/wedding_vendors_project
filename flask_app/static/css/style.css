@@ -92,3 +92,14 @@
     font-weight: bold;
     font-style: italic;
 }
+
+.main_page_image{
+    width: 500px;
+    
+}
+
+.main_page_image_container{
+    float: right;
+    margin-top: 40px; 
+    /* overflow: hidden; */
+}

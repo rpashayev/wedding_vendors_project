@@ -40,10 +40,59 @@ class Message:
         for result in results:
             exchange = vendor.Vendor(result)
             msg_exchanges.append(exchange)
-        
+            
         return msg_exchanges
     
-    
+    @classmethod
+    def get_user_msg_exchange(cls, data):
+        msgs = []
+        query = '''
+            SELECT *
+            FROM messages
+            LEFT JOIN users AS senders ON senders.id = messages.sender_id
+            LEFT JOIN users AS receivers ON receivers.id = messages.receiver_id
+            WHERE (messages.receiver_id = %(current_id)s OR messages.sender_id = %(current_id)s) AND (messages.receiver_id = %(cp_id)s OR messages.sender_id = %(cp_id)s);
+        '''
+        results = connectToMySQL(cls.DB).query_db(query, data) 
+        
+        for row in results:
+            msg = cls(row)
+            sender_info = {
+                'id': row['senders.id'],
+                'first_name': row['first_name'],
+                'last_name': row['last_name'],
+                'email': row['email'],
+                'password': row['password'],
+                'company_name': row['company_name'],
+                'phone': row['phone'],
+                'zip': row['zip'],
+                'about': row['about'],
+                'description': row['description'],
+                'created_at': row['senders.created_at'],
+                'updated_at': row['senders.updated_at']
+            }
+            receiver_info = {
+                'id': row['receivers.id'],
+                'first_name': row['receivers.first_name'],
+                'last_name': row['receivers.last_name'],
+                'email': row['email'],
+                'password': row['password'],
+                'avatar_path': row['avatar_path'],
+                'company_name': row['company_name'],
+                'phone': row['phone'],
+                'zip': row['zip'],
+                'about': row['about'],
+                'description': row['description'],
+                'created_at': row['receivers.created_at'],
+                'updated_at': row['receivers.updated_at']
+            }
+            msg.sender = vendor.Vendor(sender_info)
+            msg.receiver = vendor.Vendor(receiver_info)
+            
+            msgs.append(msg)
+        
+        return msgs
+            
     @staticmethod
     def validate_message(message):
         is_valid = True

@@ -8,5 +8,5 @@ def delete_vendor_ad():
         'ad_id': request.form['ad_id']
     }
     
-    ad.Ad.delete_add(data)
+    ad.Ad.delete_ad(data)
     return redirect('/vendors/account')

@@ -8,58 +8,71 @@
     <title>Document</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark p-1 bg-dark text-white">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar bg-body-tertiary fixed-top" >
+        <div class="container-fluid" >
+            <a class="navbar-brand" href="#" style="font-style: italic; font-weight: bolder;">Wedding Vendors</a>
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: whitesmoke; color: black; font-weight: bold;">
+                Categories
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                {% for category in categories %}
+                    <a href="/categories/{{ category.category }}" style="text-decoration: none; color: black;"><li><button class="dropdown-item" type="button">{{ category.category }}</button></li></a>
+                {% endfor %}
+                </ul>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto align-items-lg-center">
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Wedding Vendors Panel</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                     <li class="nav-item">
-                        <a class="nav-link mx-2 active" aria-current="page" href="/">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
-                    {% for category in categories %}
-                        <li class="nav-item">
-                            <a class="nav-link mx-2" href="/categories/{{ category.category }}">{{ category.category }}</a>
-                        </li>    
-                    {% endfor %}
-                    
                     {% if session %}
                         <li class="nav-item">
-                            <a class="nav-link mx-2" href="/vendors/account">Account</a>
+                            {% if session.check == 'vendor' %}
+                                <a class="nav-link mx-2" href="/vendors/account">Account</a>
+                            {% else %}
+                                <a class="nav-link mx-2" href="/users/account">Account</a>
+                            {% endif %}
                         </li>
                         <li class="nav-item">
                             <a class="nav-link mx-2" href="/logout">Logout</a>
                         </li>
                     {% else %}
-                        <ul class="navbar-nav">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                User
-                                </a>
-                            </li>
-                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="#">Login/Registration</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Vendors
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="vendors/login_page">Login</a></li>
+                                <li><a class="dropdown-item" href="vednors/login_page">Registration</a></li>
                             </ul>
-                        </ul>
-                        <ul class="navbar-nav">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Vendor
-                                </a>
-                            </li>
-                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="#">Login/Registration</a></li>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="users_login" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Users
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="users/login_page">Login</a></li>
+                                <li><a class="dropdown-item" href="users/login_page">Registration</a></li>
                             </ul>
-                        </ul>
-                        <li class="nav-item">
-                            <a class="nav-link mx-2" href="/users/login_page">User login/registration TEST</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-2" href="/vendors/login_page">Vendor login/registration TEST</a>
-                        </li>
-                    {% endif %}
+                        {%endif%}
+                    
+                    
                 </ul>
+                <form class="d-flex mt-3" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                </div>
             </div>
         </div>
     </nav>

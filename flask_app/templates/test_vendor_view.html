@@ -69,7 +69,7 @@
             <h1>{{ one_vendor.company_name }}</h1>
             <h2>Gallery</h2>
             {% for img in one_vendor.images %}
-                <img src="/static/img/{{ img.image_path }}" alt="">
+                <img src="{{ url_for('static', filename='assets/uploads/' + img.image_path) }}" alt="">
             {% endfor %}
             <p>Rating: {{ avg_rate|round(1) }}  </p>
             <h5>About</h6>

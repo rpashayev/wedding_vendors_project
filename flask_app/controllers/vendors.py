@@ -72,7 +72,7 @@ def view_vendor_account():
         'id': session['id']
     }
     
-    return render_template('test_vendor_account.html', one_vendor = vendor.Vendor.view_one_vendor(data), categories = category.Category.get_all_categories(), avg_rate = vendor.Vendor.get_avg_rate(data), exchange = message.Message.get_all_messages(data_id))
+    return render_template('vendor_account.html', one_vendor = vendor.Vendor.view_one_vendor(data), categories = category.Category.get_all_categories(), avg_rate = vendor.Vendor.get_avg_rate(data), exchange = message.Message.get_all_messages(data_id))
 
 @app.route('/logout')
 def logout():

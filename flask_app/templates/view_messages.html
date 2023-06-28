@@ -10,7 +10,7 @@
     <title>Messages</title>
 </head>
 <body>
-    <nav class="navbar bg-body-tertiary fixed-top" >
+    <nav class="navbar bg-body-tertiary" >
         <div class="container-fluid" >
             <a class="navbar-brand" href="#" style="font-style: italic; font-weight: bolder;">Wedding Vendors</a>
             <div class="btn-group">
@@ -93,13 +93,15 @@
                             <p class="text-warning m-0">Me</p>   
                     {% else %}
                         <li class="list-group-item list-group-item-light text-start">
-                            {% if msg.sender.company_name %}
-                                <p class="fw-bold">{{msg.sender.company_name}}</p>
-                            {% else %}
-                                <p class="fw-bold">{{msg.sender.first_name}} {{msg.sender.last_name}}</p>
-                            {% endif %}
+                            <p class="fw-bold my-0">
+                                {% if msg.sender.company_name %}
+                                    {{msg.sender.company_name}}
+                                {% else %}
+                                    {{msg.sender.first_name}} {{msg.sender.last_name}}
+                                {% endif %}
+                            </p>
                     {% endif %}
-                            <p> {{msg.content}} </p>
+                            <p class="my-0"> {{msg.content}} </p>
                         </li>
                 {% endfor %}
             </ul>
@@ -108,7 +110,7 @@
                 <textarea name="content" id="content" rows="3" placeholder="Message content" class="form-control"></textarea>
                 <input type="hidden" name="sender_id" value="{{ session.id }}">
                 <input type="hidden" name="receiver_id" value="{{ session.cp_id }}">
-                <button type="submit" class="btn btn-primary my-1">Send</button>
+                <button type="submit" class="btn btn-outline-primary my-1">Send</button>
             </form>
         </div>
 

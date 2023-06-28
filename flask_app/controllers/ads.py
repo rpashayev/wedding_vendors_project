@@ -15,7 +15,10 @@ def delete_vendor_ad():
 
 @app.route('/ads/new')
 def new_ad():
-    return render_template('test_create_ad.html')
+    data = {
+        'vendor_id': session['id']
+    }
+    return render_template('test_create_ad.html', categories = category.Category.get_all_categories(), images = image.Image.get_one_vendor_images(data))
 
 @app.route('/ads/create', methods = ['POST'])
 def create_ad():

@@ -48,8 +48,8 @@ class Ad:
     def new_ad(cls, data):
         query = '''
             INSERT
-            INTO ads(ad_content, category, image, vendor)
-            VALUES %(ad_content)s, %(category_id)s, %(image_id)s, %(vendor_id)s ;
+            INTO ads(ad_content, category_id, image_id, vendor_id)
+            VALUES (%(ad_content)s, %(category_id)s, %(image_id)s, %(vendor_id)s) ;
         '''
         return connectToMySQL(cls.DB).query_db(query, data)
 

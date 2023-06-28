@@ -92,10 +92,10 @@
             <form action="/ads/create" method="post">
                 <h4 class="ad_create_label">Select image</h4>
                 {% for img in images %}
-                <label>
-                    <input type="file" name="image_id" value="{{ img.id }}" >
-                    <img src="{{ url_for('static', filename='assets/uploads/' + img.image_path) }}" alt="uploaded image">
-                </label>
+                    <label>
+                        <input type="radio" name="image_id" value="{{ img.id }}" checked>
+                        <img src="{{ url_for('static', filename='assets/uploads/' + img.image_path) }}" alt="uploaded image" width="60" height="60">
+                    </label>
                 {% endfor %}
                 <h4 class="ad_create_label">Category</h4>
                 <select style="width: 200px; height: 35px;" name="category_id" id="category_id">

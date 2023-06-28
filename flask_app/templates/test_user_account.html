@@ -67,39 +67,27 @@
             </div>
         </div>
     </nav>
+    <div class="d-flex justify-content-between col-12">
         <div class="col-3">
+            <h1>{{ one_user.first_name.title() }} {{ one_user.last_name.title() }}</h1>
+            <img src="{{ url_for('static', filename='assets/uploads/' + one_user.avatar_path) }}" alt="avatar">            
+        </div>
+        <div class="col-9">
             <h5>Messages</h5>
-            {% with messages = get_flashed_messages(category_filter=["message_error"]) %}
-                {% if messages %}
-                    {% for message in messages %}
-                        <p class="text-danger">{{ message }}</p>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-            <ul class="list-group">
-                {% for msg in msgs %}
-                    {% if msg.sender.id == session.id %}
-                        <li class="list-group-item list-group-item-success text-end">
-                            <p class="text-warning m-0">Me</p>   
-                    {% else %}
-                        <li class="list-group-item list-group-item-secondary text-start">
-                            {% if msg.sender.company_name %}
-                                <p>{{msg.sender.company_name}}</p>
+            <ul>
+                {% for msg in exchange %}
+                    <form action="/messages/get" method="post">
+                        <li>
+                            {% if msg.company_name %}
+                                <button type="submit" class="btn btn-link p-0 m-0"> {{ msg.company_name }} </button>
                             {% else %}
-                                <p>{{msg.sender.first_name}} {{msg.sender.last_name}}</p>
+                                <button type="submit" class="btn btn-link p-0 m-0"> {{ msg.first_name }} {{ msg.last_name }} </button>
                             {% endif %}
-                    {% endif %}
-                            <p> {{msg.content}} </p>
+                            <input type="hidden" name="cp_id" value="{{ msg.id }}">
                         </li>
+                    </form>
                 {% endfor %}
             </ul>
-            <form action="/messages/sent" method="post">
-                <label for="content"></label>
-                <textarea name="content" id="content" rows="3" placeholder="Message content"></textarea>
-                <input type="hidden" name="sender_id" value="{{ session.id }}">
-                <input type="hidden" name="receiver_id" value="{{ session.cp_id }}">
-                <button type="submit">Send</button>
-            </form>
         </div>
     </div>
 </body>

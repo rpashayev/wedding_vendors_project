@@ -46,3 +46,14 @@ def user_register():
     session['id'] = user.User.register_user(user_data)
     
     return redirect('/')
+
+@app.route('/users/account')
+def view_user_account():
+    if 'id' not in session or session['check'] == 'vendor':
+        return redirect('/')
+    
+    data_id = {
+        'id': session['id']
+    }
+    
+    return render_template('test_user_account.html', one_user = user.User.view_one_user(data_id), categories = category.Category.get_all_categories(), exchange = message.Message.get_all_messages(data_id))

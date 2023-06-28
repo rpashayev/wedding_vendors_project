@@ -19,7 +19,7 @@
                 <h5 class="login-statement"><span id="users">Lovers</span> Log in to your account</h4>
                 <div>
                     <p style="margin-left: 80px;">Not a member yet? <a href="" class="join">Join Now</a></p>
-                    <form action="" method="post">
+                    <form action="/users/login" method="post">
                         {% with messages = get_flashed_messages(category_filter=["login_error"]) %}
                         {% if messages %}
                             {% for message in messages %}
@@ -47,7 +47,7 @@
         <div class="register-card">
             <div class="card-body">
                 <h2 class="register-header">Join Us!</h2>
-                <form class="text-warning" action="" method="post">
+                <form class="text-warning" action="/users/register" method="post" enctype="multipart/form-data">
                     {% with messages = get_flashed_messages(category_filter=["reg_error"]) %}
                         {% if messages %}
                             {% for message in messages %}

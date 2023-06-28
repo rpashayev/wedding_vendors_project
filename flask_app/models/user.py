@@ -55,7 +55,7 @@ class User:
             flash('Email was already registered', 'reg_error')
             is_valid = False
             return is_valid
-        if len(user['first_name']) == 0 or len(user['last_name']) == 0 or len(user['email']) == 0 or len(user['zip_code']) == 0 or NAME_REGEX.match(user['first_name']) or NAME_REGEX.match(user['last_name']):
+        if len(user['first_name']) == 0 or len(user['last_name']) == 0 or len(user['email']) == 0 or NAME_REGEX.match(user['first_name']) or NAME_REGEX.match(user['last_name']):
             flash('All fields are required!', 'reg_error')
             is_valid = False
         if len(user['first_name']) < 2 or len(user['last_name']) < 2:

@@ -26,4 +26,4 @@ def view_messages():
         'current_id': session['id']
     }
     
-    return render_template('test_view_messages.html', msgs = message.Message.get_user_msg_exchange(data), categories = category.Category.get_all_categories())
+    return render_template('view_messages.html', msgs = message.Message.get_user_msg_exchange(data), categories = category.Category.get_all_categories())

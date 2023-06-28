@@ -133,7 +133,8 @@
     align-items: center;
 }
 .ad_card_photo{
-    width: 300px;
+    width: 200px;
+    border-radius: 50%;
     border-top-left-radius: 5%;
     border-top-right-radius: 5%;
 }
@@ -177,7 +178,7 @@
     display: none
 }
 
-.rating>label {
+.rating>label, .star {
     position: relative;
     width: 1em;
     font-size: 30px;

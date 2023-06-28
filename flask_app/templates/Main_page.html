@@ -90,14 +90,28 @@
                 <h2 class="category_name">{{ row.category }}</h2>
                 <div class="d-flex">
                     {% for ad in row.ads %}
-                        <div class="ad_card">
+                        <div class="ad_card card">
                             <a href="/vendors/view/{{ ad.vendor.id }}" class="text-decoration-none">
-                                <img src="/static/img/{{ ad.image.image_path}}" alt="" class="ad_card_photo">
-                                <h3 class="vendor_company_name">{{ ad.vendor.company_name }}</h3>
-                                <div class="rating_and_star">
+                                <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                    <img src="{{ url_for('static', filename='assets/uploads/' +  ad.image.image_path) }}" alt="" class="img-fluid">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title font-weight-bold">{{ ad.vendor.company_name }}</h5>
+                                    <ul class="list-unstyled list-inline mb-0">
+                                        <li class="list-inline-item me-0">
+                                            <label class="star">★</label> 
+                                        </li>
+                                        <li class="list-inline-item me-0">
+                                            <p class="text-muted m-0">{{ ad.vendor.reviews[0]|round(1) }}</p>
+                                        </li>
+                                    </ul>
+                                    <p class="card-text">{{ ad.ad_content }}</p>
+                                </div>
+                                <!-- <h3 class="vendor_company_name">{{ ad.vendor.company_name }}</h3> -->
+                                <!-- <div class="rating_and_star">
                                     <img src="{{url_for('static', filename='img/star.webp')}}" alt="" class="ad_card_star">
                                     <p> {{ ad.vendor.reviews[0]|round(1) }} | {{ ad.ad_content }}</p>
-                                </div>
+                                </div> -->
                             </a>
                         </div>
                     {% endfor %}

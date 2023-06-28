@@ -206,3 +206,28 @@
     opacity: 0.4
 }
 
+.create_ad_container{
+    background-color: black;
+    color: white;
+    width: 500px;
+    height: 500px;
+    margin-top: 20px;
+    padding: 30px;
+    border-radius: 10%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+
+.create_add_title{
+    align-items: center;
+    margin: auto;
+    margin-top: 80px;
+}
+
+.ad_create_label{
+    margin-top: 30px;
+}

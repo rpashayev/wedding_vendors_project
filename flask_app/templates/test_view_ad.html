@@ -88,7 +88,7 @@
             {% endwith %}
 
             <form action="/ads/edit" method="post">
-                <img src="{{ ad.image.image_path }}" alt="ad image">
+                <img src="{{ url_for('static', filename='assets/uploads/' + ad.image.image_path) }}" alt="ad image">
                 <h3>Category</h3>
                 <select name="category_id" id="category_id">
                     {% for category in categories %}

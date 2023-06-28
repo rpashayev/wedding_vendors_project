@@ -19,7 +19,7 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
                 {% for category in categories %}
-                    <li><button class="dropdown-item" type="button"><a href="/categories/{{ category.category }}" style="text-decoration: none; color: black;">{{ category.category }}</a></button></li>
+                    <a href="/categories/{{ category.category }}" style="text-decoration: none; color: black;"><li><button class="dropdown-item" type="button">{{ category.category }}</button></li></a>
                 {% endfor %}
                 </ul>
             </div>
@@ -28,7 +28,7 @@
             </button>
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Wedding Venors Panel</h5>
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Wedding Vendors Panel</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
@@ -38,10 +38,11 @@
                     </li>
                     {% if session %}
                         <li class="nav-item">
-                            <a class="nav-link mx-2" href="/vendors/account">Account</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-2" href="/logout">Logout</a>
+                            {% if session.check == 'vendor' %}
+                                <a class="nav-link mx-2" href="/vendors/account">Account</a>
+                            {% else %}
+                                <a class="nav-link mx-2" href="/users/account">Account</a>
+                            {% endif %}
                         </li>
                     {% else %}
                         <li class="nav-item dropdown">
@@ -81,16 +82,15 @@
             <img src="{{url_for('static', filename='img/mainpage.jpg')}}" alt="" class="main_page_image">
         </div>
         <div>
-            <h1>Category</h1>
         {% for row in top_ads %}
             <div>
-                <h2>{{ row.category }}</h2>
+                <h2 class="category_name">{{ row.category }}</h2>
                 <div class="d-flex">
                     {% for ad in row.ads %}
                         <div class="ad_card">
                             <a href="/vendors/view/{{ ad.vendor.id }}" class="text-decoration-none">
                                 <img src="/static/img/{{ ad.image.image_path}}" alt="" class="ad_card_photo">
-                                <h3>{{ ad.vendor.company_name }}</h3>
+                                <h3 class="vendor_company_name">{{ ad.vendor.company_name }}</h3>
                                 <div class="rating_and_star">
                                     <img src="{{url_for('static', filename='img/star.webp')}}" alt="" class="ad_card_star">
                                     <p> {{ ad.vendor.reviews[0]|round(1) }} | {{ ad.ad_content }}</p>

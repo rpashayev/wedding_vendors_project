@@ -24,6 +24,7 @@ def new_ad():
 def create_ad():
     if 'id' not in session:
         return redirect('/')
+    print(request.form['image_id'])
     data = {
         'ad_content': request.form['ad_content'],
         'category_id': request.form['category_id'],
@@ -32,7 +33,7 @@ def create_ad():
     }
     if not ad.Ad.validate_ad(data):
         return redirect('/ads/new')
-    ad.Ad.new_ad(data)
+    # ad.Ad.new_ad(data)
     return redirect('/vendors/account')
 
 @app.route('/ads/view/<int:ad_id>')

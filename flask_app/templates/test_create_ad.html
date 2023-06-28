@@ -78,7 +78,7 @@
                 <h4>Select image</h4>
                 {% for img in images %}
                 <label>
-                    <input type="radio" name="image_id" value="{{ img.id }}">
+                    <input type="radio" name="image_id" value="{{ img.id }}" checked>
                     <img src="{{ url_for('static', filename='assets/uploads/' + img.image_path) }}" alt="uploaded image">
                 </label>
                 {% endfor %}

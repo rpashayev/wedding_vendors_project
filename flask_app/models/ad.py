@@ -103,7 +103,7 @@ class Ad:
         if len(ad['ad_content']) < 3 or AD_REGEX.match(ad['ad_content']):
             flash('Ad content cannot be empty', 'ad_error')
             isValid = False
-        # if not ad['image_id']:
-        #     flash('Please select the image for your ad', 'ad_error')
-        #     is_valid = False
+        if ad['image_id'] is None:
+            flash('Please select the image for your ad', 'ad_error')
+            is_valid = False
         return isValid

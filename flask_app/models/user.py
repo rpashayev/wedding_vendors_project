@@ -22,8 +22,31 @@ class User:
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         
+        self.role = None
         self.messages = []
-        
+        self.reviews = []
+
+    @classmethod
+    def register_user(cls, data):
+        query = '''
+            INSERT 
+            INTO users(first_name, last_name, email, password, avatar_path, role_id)
+            VALUES ( %(first_name)s, %(last_name)s, %(email)s, %(password)s, %(avatar_path)s, %(role_id)s);
+        '''
+        return connectToMySQL(cls.DB).query_db(query, data)
+    
+    @classmethod
+    def get_user_by_email(cls,data):
+        query = '''
+            SELECT * 
+            FROM users 
+            WHERE email = %(email)s;
+        '''
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        if len(results) < 1:
+            return False
+        return cls(results[0])
+
 
     @staticmethod
     def validate_user_registration(user):

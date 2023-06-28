@@ -76,11 +76,10 @@
     <div class="vendors_main_container">
         <div class="vendors_main_top">
             <img src="{{url_for('static', filename='img/logo.jpg')}}" alt="" class="main_logo">
-            <h1 class="company-name" style="font-size: 70px; font-style: italic;"> Wedding {{cat_ads.category}}</h1>
+            <h1 class="company-name" style="font-size: 60px; font-style: italic;"> Wedding {{cat_ads.category}}</h1>
             <img src="{{url_for('static', filename='img/mainpage.jpg')}}" alt="" class="main_page_image">
         </div>
         <div>
-            <h1>Category</h1>
             <h2>{{ cat_ads.category }}</h2>
             <div class="d-flex">
                 {% for ad in cat_ads.ads %}

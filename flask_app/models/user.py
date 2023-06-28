@@ -47,7 +47,19 @@ class User:
             return False
         return cls(results[0])
 
-
+    @classmethod
+    def view_one_user(cls, data):  
+        query = '''
+            SELECT *
+            FROM users
+            WHERE users.id = %(id)s;
+        '''
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        if len(results) < 1:
+            return False
+        
+        return cls(results[0])
+        
     @staticmethod
     def validate_user_registration(user):
         is_valid = True

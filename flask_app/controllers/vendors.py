@@ -62,7 +62,7 @@ def view_vendor(id):
 
 @app.route('/vendors/account')
 def view_vendor_account():
-    if 'id' not in session:
+    if 'id' not in session or session['check'] == 'user':
         return redirect('/')
     data = {
         'vendor_id': session['id']

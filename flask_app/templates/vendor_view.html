@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark p-1 bg-dark text-white">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link mx-2 active" aria-current="page" href="/">Home</a>
+                    </li>
+                    {% for category in categories %}
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="/categories/{{ category.category }}">{{ category.category }}</a>
+                        </li>    
+                    {% endfor %}
+                    
+                    {% if session %}
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="/vendors/account">Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="/logout">Logout</a>
+                        </li>
+                    {% else %}
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                User
+                                </a>
+                            </li>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">Login/Registration</a></li>
+                            </ul>
+                        </ul>
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Vendor
+                                </a>
+                            </li>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">Login/Registration</a></li>
+                            </ul>
+                        </ul>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="/users/login_page">User login/registration TEST</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" href="/vendors/login_page">Vendor login/registration TEST</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container my-4 ms-auto">
+        <h1 class="text-center"><span class="text-primary">{{ one_vendor.company_name }}</span> company info</h1>
+        <div class="d-flex justify-content-between col-12">
+            <div class="col-8">
+                {% for img in one_vendor.images %}
+                    <img src="{{ url_for('static', filename='assets/uploads/' + img.image_path) }}" alt="vendor image" class="rounded-3">
+                {% endfor %}
+                <p class="mt-1 fw-bold">Rating: <label class="star fs-5">★</label>{{ avg_rate|round(1) }}</p>
+
+                <h6>About</h6>
+                <p>{{ one_vendor.about }}</p>
+                <h5>Description</h6>
+                <p>{{ one_vendor.description }}</p>
+                
+                <h5>{{ one_vendor.reviews|length }} Reviews</h5>
+                {% for review in one_vendor.reviews %} 
+                <div class="border-top m-0">
+                    <p class="fw-light text-muted mt-2 mb-0"> {{ review.user.first_name.title() }} on {{ review.user.updated_at.strftime('%b %d, %Y') }} <label class="star fs-5">★</label><span class="fw-normal">{{ review.rate }}</span></p>
+                    <p></p>
+                    <h6>{{ review.title }}</h6>
+                    <p>{{ review.content }}</p>
+                    {% if review.user.id == session.id %}
+                        <a href="">Edit</a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <h4 class="text-primary mb-0 mt-2 p-0">Add review</h4>
+                {% if session %}
+                    {% with messages = get_flashed_messages(category_filter=["review_error"]) %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p class="text-danger">{{ message }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <form action="/reviews/add" method="post" class="border border-primary p-2">
+                        <h6 class="mb-0">Rate</h6>
+                        <div class="rating"> <input type="radio" name="rate" value="5" id="5"><label for="5">☆</label> <input type="radio" name="rate" value="4" id="4"><label for="4">☆</label> <input type="radio" name="rate" value="3" id="3"><label for="3">☆</label> <input type="radio" name="rate" value="2" id="2"><label for="2">☆</label> <input type="radio" name="rate" value="1" id="1"><label for="1">☆</label>
+                        </div>
+                        <!-- <select name="rate" id="rate">
+                            <option value="5" selected>5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+                        </select> -->
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" name="title" id="title" placeholder="title here...">
+
+                        <label for="content" class="form-label">Review</label>
+                        <textarea class="form-control" name="content" id="content" rows="3" placeholder="content here..."></textarea>
+
+                        <input type="hidden" name="vendor_id" value="{{ one_vendor.id }}">
+                        <input type="hidden" name="user_id" value="{{ session.id }}">
+
+                        <button type="submit" class="btn btn-outline-warning mt-1">Post</button>
+
+                    </form>
+                {% else %}
+                    <p class="text-warning">Login to send a message</p>
+                {% endif %}
+            </div>
+            <div>
+                <div class="card p-2 border-primary">
+                    <h5 class="card-title">Send message</h5>
+                    {% with messages = get_flashed_messages(category_filter=["message_error"]) %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p class="text-danger">{{ message }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    {% if session %}
+                        <form action="/messages/sent" method="post">
+                            <label for="content"></label>
+                            <textarea name="content" id="content" class="form-control" rows="5" placeholder="Message content"></textarea>
+                            <input type="hidden" name="sender_id" value="{{ session.id }}">
+                            <input type="hidden" name="receiver_id" value="{{ one_vendor.id }}">
+                            <button type="submit" class="btn btn-outline-primary my-1">Send</button>
+                        </form>
+                    {% else %}
+                        <p class="text-warning">Login to send a message</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

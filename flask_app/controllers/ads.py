@@ -50,7 +50,7 @@ def edit_page_ad(ad_id):
 @app.route('/ads/edit', methods=['POST'])
 def edit_ad():
     data = {
-        'ad_id': request.form['ad_id'],
+        'image_id': request.form['ad_id'],
         'ad_content': request.form['ad_content'],
         'category_id': request.form['category_id'],
         'vendor_id': session['id']

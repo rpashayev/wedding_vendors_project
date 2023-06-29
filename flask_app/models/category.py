@@ -40,7 +40,8 @@ class Category:
                 FROM reviews
                 GROUP BY vendor_id
             ) AS review_avg ON review_avg.vendor_id = users.id
-            WHERE categories.category = %(category_name)s;
+            WHERE categories.category = %(category_name)s
+            ORDER BY average_rating DESC;
         '''
         results = connectToMySQL(cls.DB).query_db(query, data)
         if len(results) < 1:
@@ -93,7 +94,7 @@ class Category:
     
     @classmethod
     def get_top_from_category(cls):
-        top = 5
+        top = 3 
         categories = []
         query = f'''
             SELECT categories.*, ads.*, images.*, users.*, review_avg.average_rating
@@ -118,7 +119,7 @@ class Category:
                 ) AS subquery
                 WHERE subquery.cat_id = categories.id AND subquery.avg_rating >= review_avg.average_rating
             ) <= {top}
-            ORDER BY categories.id;
+            ORDER BY categories.id, average_rating DESC;
         '''
         results = connectToMySQL(cls.DB).query_db(query)
         

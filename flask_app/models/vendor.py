@@ -100,7 +100,7 @@ class Vendor:
                     one_review.user = user.User(reviewer_info)
                     one_vendor.reviews.append(one_review)
 
-                one_vendor.images = image.Image.get_one_vendor_images(data)
+            one_vendor.images = image.Image.get_one_vendor_images(data)
                 
             if row['ads.id'] != None and row['ads.id'] not in ads_dict:
                     ad_info = {

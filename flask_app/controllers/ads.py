@@ -33,7 +33,7 @@ def create_ad():
     }
     if not ad.Ad.validate_ad(data):
         return redirect('/ads/new')
-    # ad.Ad.new_ad(data)
+    ad.Ad.new_ad(data)
     return redirect('/vendors/account')
 
 @app.route('/ads/view/<int:ad_id>')

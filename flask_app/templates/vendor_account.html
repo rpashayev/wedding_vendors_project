@@ -83,7 +83,7 @@
         <div class="d-flex justify-content-between col-12">
             <div class="col-6">
                 {% for img in one_vendor.images %}
-                    <img src="{{ url_for('static', filename='assets/uploads/' + img.image_path) }}" alt="ad image" class="rounded mx-auto my-2">  
+                    <img src="{{ url_for('static', filename='assets/uploads/' + img.image_path) }}" alt="ad image" class="rounded mx-auto my-2" width="200">  
                 {% endfor %}
                 <form action="/images/add", method="post", enctype="multipart/form-data" class="d-flex col-md-8">
                     <input type="file" class="form-control col-md-4" name="image_path" id="image" accept="image/*" placeholder="Upload image">

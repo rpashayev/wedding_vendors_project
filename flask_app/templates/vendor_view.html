@@ -93,6 +93,7 @@
                 <h5>{{ one_vendor.reviews|length }} Reviews</h5>
                 {% for review in one_vendor.reviews %} 
                 <div class="border-top m-0">
+                    {{ review.user.avatar_path }}
                     <p class="fw-light text-muted mt-2 mb-0"> {{ review.user.first_name.title() }} on {{ review.user.updated_at.strftime('%b %d, %Y') }} <label class="star fs-5">★</label><span class="fw-normal">{{ review.rate }}</span></p>
                     <p></p>
                     <h6>{{ review.title }}</h6>

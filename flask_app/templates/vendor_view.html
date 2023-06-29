@@ -97,9 +97,7 @@
                         {% if review.user.avatar_path %}
                             <img src="{{ url_for('static', filename='assets/uploads/' + review.user.avatar_path) }}" alt="vendor image" class="rounded-circle my-2 me-2" width="50" height="50">
                         {% else %}
-                            <div >
-                                <p class="d-flex rounded-circle bg-secondary text-light p-3 my-2 me-2" width="40" height="40">{{ review.user.first_name.title()[:1]}}{{ review.user.last_name.title()[:1]}}</p>
-                            </div>
+                            <p class="d-flex rounded-circle bg-secondary text-light p-3 my-2 me-2" width="40" height="40">{{ review.user.first_name.title()[:1]}}{{ review.user.last_name.title()[:1]}}</p>
                         {% endif %}
                         <p class="fw-light text-muted mt-2 mb-0"> {{ review.user.first_name.title() }} on {{ review.user.updated_at.strftime('%b %d, %Y') }} <label class="star fs-5">★</label><span class="fw-normal">{{ review.rate }}</span></p>
                     </div>

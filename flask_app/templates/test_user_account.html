@@ -77,30 +77,29 @@
             </div>
         </div>
     </nav>
-    <div class="container mt-4">
-        <div class="d-flex justify-content-between col-12 mt-4">
-            <div class="col-3 mt-4">
-                <h1>{{ one_user.first_name.title() }} {{ one_user.last_name.title() }}</h1>
-                <img src="{{ url_for('static', filename='assets/uploads/' + one_user.avatar_path) }}" alt="avatar">            
-            </div>
-            <div class="col-9 mt-4">
-                <h5>Messages</h5>
-                <ul>
-                    {% for msg in exchange %}
-                        <form action="/messages/get" method="post">
-                            <li>
-                                {% if msg.company_name %}
-                                    <button type="submit" class="btn btn-link p-0 m-0"> {{ msg.company_name }} </button>
-                                {% else %}
-                                    <button type="submit" class="btn btn-link p-0 m-0"> {{ msg.first_name }} {{ msg.last_name }} </button>
-                                {% endif %}
-                                <input type="hidden" name="cp_id" value="{{ msg.id }}">
-                            </li>
-                        </form>
-                    {% endfor %}
-                </ul>
+    <div>
+        <div class= user_account_container>
+            <div class="user_name_and_image_container">
+                <h2>{{ one_user.first_name.title() }} {{ one_user.last_name.title() }}</h2>
+                <img src="{{ url_for('static', filename='assets/uploads/' + one_user.avatar_path) }}" alt="avatar" class="user_image">            
+                <div class="messages_container">
+                    <h5>Messages</h5>
+                    <ul>
+                        {% for msg in exchange %}
+                            <form action="/messages/get" method="post">
+                                <li>
+                                    {% if msg.company_name %}
+                                        <button type="submit"> {{ msg.company_name }} </button>
+                                    {% else %}
+                                        <button type="submit" > {{ msg.first_name }} {{ msg.last_name }} </button>
+                                    {% endif %}
+                                    <input type="hidden" name="cp_id" value="{{ msg.id }}">
+                                </li>
+                            </form>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
 </body>
 </html>

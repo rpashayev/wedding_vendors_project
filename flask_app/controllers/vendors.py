@@ -48,6 +48,7 @@ def vendor_register():
     }
     
     session['id'] = vendor.Vendor.register_vendor(vendor_data)
+    session['check'] = 'vendor'
     
     return redirect('/')
 

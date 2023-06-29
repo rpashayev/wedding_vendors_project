@@ -44,6 +44,7 @@ def user_register():
     }
     
     session['id'] = user.User.register_user(user_data)
+    session['check'] = 'user'
     
     return redirect('/')
 

@@ -91,7 +91,7 @@ class Vendor:
                     'last_name': row['reviewers.last_name'],
                     'email': row['email'],
                     'password': row['password'],
-                    'avatar_path': row['avatar_path'],
+                    'avatar_path': row['reviewers.avatar_path'],
                     'created_at': row['reviewers.created_at'],
                     'updated_at': row['reviewers.updated_at']
                 }
@@ -100,7 +100,7 @@ class Vendor:
                     one_review.user = user.User(reviewer_info)
                     one_vendor.reviews.append(one_review)
 
-                one_vendor.images = image.Image.get_one_vendor_images(data)
+            one_vendor.images = image.Image.get_one_vendor_images(data)
                 
             if row['ads.id'] != None and row['ads.id'] not in ads_dict:
                     ad_info = {

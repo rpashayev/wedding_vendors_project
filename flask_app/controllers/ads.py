@@ -33,7 +33,7 @@ def create_ad():
     }
     if not ad.Ad.validate_ad(data):
         return redirect('/ads/new')
-    # ad.Ad.new_ad(data)
+    ad.Ad.new_ad(data)
     return redirect('/vendors/account')
 
 @app.route('/ads/view/<int:ad_id>')
@@ -50,7 +50,7 @@ def edit_page_ad(ad_id):
 @app.route('/ads/edit', methods=['POST'])
 def edit_ad():
     data = {
-        'ad_id': request.form['ad_id'],
+        'image_id': request.form['ad_id'],
         'ad_content': request.form['ad_content'],
         'category_id': request.form['category_id'],
         'vendor_id': session['id']

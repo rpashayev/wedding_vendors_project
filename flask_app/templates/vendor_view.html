@@ -81,7 +81,7 @@
         <div class="d-flex justify-content-between col-12">
             <div class="col-8">
                 {% for img in one_vendor.images %}
-                    <img src="{{ url_for('static', filename='assets/uploads/' + img.image_path) }}" alt="vendor image" class="rounded-3">
+                    <img src="{{ url_for('static', filename='assets/uploads/' + img.image_path) }}" alt="vendor image" class="rounded-3" width="125">
                 {% endfor %}
                 <p class="mt-1 fw-bold">Rating: <label class="star fs-5">★</label>{{ avg_rate|round(1) }}</p>
 

@@ -91,7 +91,7 @@ class Vendor:
                     'last_name': row['reviewers.last_name'],
                     'email': row['email'],
                     'password': row['password'],
-                    'avatar_path': row['avatar_path'],
+                    'avatar_path': row['reviewers.avatar_path'],
                     'created_at': row['reviewers.created_at'],
                     'updated_at': row['reviewers.updated_at']
                 }
